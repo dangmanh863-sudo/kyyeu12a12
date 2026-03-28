@@ -1821,5 +1821,34 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 </body>
+<script>
+const menuBtn = document.getElementById("menu-toggle");
+const navLinks = document.querySelector(".nav-links");
+
+menuBtn.onclick = () => {
+    navLinks.classList.toggle("show");
+};
+</script>
+</html>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuBtn = document.getElementById("menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+
+    menuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+    });
+
+    // click link thì tự đóng menu
+    document.querySelectorAll(".nav-links a").forEach(link => {
+        link.addEventListener("click", () => {
+            navLinks.classList.remove("show");
+        });
+    });
+
+});
+</script>
+</body>
 </html>
 

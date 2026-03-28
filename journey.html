@@ -12,6 +12,78 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
+        /* ===== CHO GIÁO VIÊN CHỒNG LÊN ẢNH NĂM ===== */
+.year-card {
+    position: relative;
+}
+
+.teacher-overlay {
+    position: absolute;
+    top: -30px;
+    right: 20px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.teacher-overlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* ===== MENU MOBILE ===== */
+
+#menu-toggle {
+    display: none;
+    font-size: 1.6rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    #menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        right: 0;
+        width: 220px;
+        height: calc(100vh - 70px);
+        background: white;
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        transform: translateX(100%);
+        transition: 0.3s ease;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        z-index: 999;
+    }
+
+    .nav-links.show {
+        transform: translateX(0);
+    }
+
+    .nav-links a {
+        font-size: 1.1rem;
+    }
+}
+
+/* DARK MODE SUPPORT */
+body.dark .nav-links {
+    background: #1a1a2e;
+}
+
         :root {
             --primary: #3498db;
             --accent: #e74c3c;
@@ -382,111 +454,33 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a class="logo" href="index.html">12A12</a>
-            <ul class="nav-links" role="menubar">
-                <li role="none"><a role="menuitem" href="index.html">Trang Chủ</a></li>
-                <li role="none"><a role="menuitem" href="index.html#members">Thành Viên</a></li>
-                <li role="none"><a role="menuitem" href="journey.html" class="active">Hành Trình 3 Năm</a></li>
-                <li role="none"><a role="menuitem" href="guestbook.html">Lưu Bút</a></li>
-            </ul>
-            <button id="edit-toggle" type="button" aria-label="Bật chế độ chỉnh sửa">✏️</button>
-            <button id="theme-toggle" type="button" aria-label="Chuyển sang chế độ tối">🌙</button>
-        </nav>
-    </header>
+<header>
+    <nav>
+        <a class="logo" href="#home">12A12</a>
 
-    <main class="container">
-        <h2 class="section-title" data-aos="fade-up">Hành Trình 3 Năm của 12A12</h2>
+        <!-- MENU -->
+        <ul class="nav-links">
+            <li><a href="#home">Trang Chủ</a></li>
+            <li><a href="#members">Thành Viên</a></li>
+            <li><a href="gallery.html">Kho Ảnh</a></li>
+            <li><a href="luutruvideo.html">Video</a></li>
+            <li><a href="journey.html">Hành Trình</a></li>
+            <li><a href="guestbook.html">Lưu Bút</a></li>
+        </ul>
 
-        <div class="journey-grid" data-aos="fade-up">
-            <div class="journey-column journey-teachers">
-                <h3 class="section-subtitle">Giáo viên đồng hành</h3>
+        <!-- NÚT MENU MOBILE -->
+        <button id="menu-toggle">☰</button>
 
-                <div class="teacher" data-year="2023" data-aos="fade-up">
-                    <div class="teacher-img">
-                        <img id="journey-teacher-2023" src="images/teacher-2023.jpg" alt="Giáo viên năm 2023" loading="lazy"
-                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
-                        <label class="image-upload-overlay" for="journey-upload-teacher-2023" title="Thay ảnh giáo viên 2023">📷</label>
-                        <input type="file" id="journey-upload-teacher-2023" class="image-upload-input" accept="image/*" />
-                    </div>
-                    <div class="teacher-info">
-                        <h4>Giáo viên 2023</h4>
-                        <p>Thầy/Cô đã đồng hành cùng chúng ta từ những ngày đầu tiên, tạo nền tảng cho một hành trình đáng nhớ.</p>
-                    </div>
-                </div>
+        <!-- NÚT KHÁC -->
+        <button id="edit-toggle">✏️</button>
+        <button id="bg-toggle">🖼️</button>
+        <button id="theme-toggle">🌙</button>
+    </nav>
+</header> <main class="container"> <h2 class="section-title" data-aos="fade-up">Hành Trình 3 Năm của 12A12</h2> <div class="journey-grid" data-aos="fade-up"> <div class="journey-column journey-teachers"> <h3 class="section-subtitle">Giáo viên đồng hành</h3> <div class="teacher" data-year="2023" data-aos="fade-up"> <div class="teacher-img"> <img id="journey-teacher-2023"src="https://i.postimg.cc/zGmqmbMk/z7666497082667-3653b31e211927e51d972529b943a4de.jpg" alt="Giáo viên năm 2023" loading="lazy" onerror="this.onerror=null; this.src='https://i.postimg.cc/zGmqmbMk/z7666497082667-3653b31e211927e51d972529b943a4de.jpg';"> <input type="file" id="journey-upload-teacher-2023" class="image-upload-input" accept="image/*" /> </div> <div class="teacher-info"> <h4>Giáo viên 2023</h4> <p>Thầy/Cô đã đồng hành cùng chúng ta từ những ngày đầu tiên, tạo nền tảng cho một hành trình đáng nhớ.</p> </div> </div> <div class="teacher" data-year="2024" data-aos="fade-up" data-aos-delay="100"> <div class="teacher-img"> <img id="journey-teacher-2024" src="https://postimg.cc/gnKC8JGw" alt="Giáo viên năm 2024" loading="lazy" onerror="this.onerror=null; this.src='https://postimg.cc/gnKC8JGw;'"> <input type="file" id="journey-upload-teacher-2024" class="image-upload-input" accept="image/*" /> </div> <div class="teacher-info"> <h4>Giáo viên 2024</h4> <p>Thầy/Cô luôn ở bên, hỗ trợ và động viên mỗi khi chúng ta chuẩn bị bước vào kỳ thi quan trọng.</p> </div> </div> <div class="teacher" data-year="2025" data-aos="fade-up" data-aos-delay="200"> <div class="teacher-img"> <img id="journey-teacher-2025" src="images/teacher-2023.jpg" alt="Giáo viên năm 2025" loading="lazy" onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';"> <input type="file" id="journey-upload-teacher-2025" class="image-upload-input" accept="image/*" /> </div> <div class="teacher-info"> <h4>Giáo viên 2025</h4> <p>Những lời dặn dò cuối năm và nụ cười của thầy/cô sẽ mãi là ký ức khó phai.</p> </div> </div> </div> <div class="journey-column journey-years"> <h3 class="section-subtitle">Hành trình 3 năm</h3> <div class="year-card" data-year="2023" data-aos="fade-up"> <div class="timeline-img"> <img id="journey-img-2023" src="https://postimg.cc/gnKC8JGw" alt="Năm 2023 - Mới làm quen" loading="lazy" onerror="this.onerror=null; this.src='https://postimg.cc/gnKC8JGw';"> <input type="file" id="journey-upload-2023" class="image-upload-input" accept="image/*" /> </div> <div class="timeline-content"> <h3>2023 – Lần đầu gặp gỡ</h3> <p>Đây là năm chúng ta mới làm quen, bước vào những ngày đầu tiên của hành trình chung.</p> </div> </div> <div class="year-card" data-year="2024" data-aos="fade-up" data-aos-delay="100"> <div class="timeline-img"> <img id="journey-img-2024" src="images/teacher-2024.jpg" alt="Năm 2024 - Đã là bạn bè" loading="lazy" onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';"> <input type="file" id="journey-upload-2024" class="image-upload-input" accept="image/*" /> </div> <div class="timeline-content"> <h3>2024 – Đã là những người bạn</h3> <p>Khi cùng nhau vượt qua thử thách, niềm vui và nỗi nhớ, chúng ta gắn kết hơn từng ngày.</p> </div> </div> <div class="year-card" data-year="2025" data-aos="fade-up" data-aos-delay="200"> <div class="timeline-img"> <img id="journey-img-2025" src="images/2025.jpg" alt="Năm 2025 - Thân như không thể xa nhau" loading="lazy" onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';"> <input type="file" id="journey-upload-2025" class="image-upload-input" accept="image/*" /> </div> <div class="timeline-content"> <h3>2025 – Thân như không thể xa nhau</h3> <p>Một năm đầy kỷ niệm, nơi tình bạn trở nên sâu sắc và chúng ta luôn ở bên nhau.</p> </div> </div> </div> </div>
 
-                <div class="teacher" data-year="2024" data-aos="fade-up" data-aos-delay="100">
-                    <div class="teacher-img">
-                        <img id="journey-teacher-2024" src="images/teacher-2024.jpg" alt="Giáo viên năm 2024" loading="lazy"
-                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
-                        <label class="image-upload-overlay" for="journey-upload-teacher-2024" title="Thay ảnh giáo viên 2024">📷</label>
-                        <input type="file" id="journey-upload-teacher-2024" class="image-upload-input" accept="image/*" />
-                    </div>
-                    <div class="teacher-info">
-                        <h4>Giáo viên 2024</h4>
-                        <p>Thầy/Cô luôn ở bên, hỗ trợ và động viên mỗi khi chúng ta chuẩn bị bước vào kỳ thi quan trọng.</p>
-                    </div>
-                </div>
 
-                <div class="teacher" data-year="2025" data-aos="fade-up" data-aos-delay="200">
-                    <div class="teacher-img">
-                        <img id="journey-teacher-2025" src="images/teacher-2023.jpg" alt="Giáo viên năm 2025" loading="lazy"
-                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
-                        <label class="image-upload-overlay" for="journey-upload-teacher-2025" title="Thay ảnh giáo viên 2025">📷</label>
-                        <input type="file" id="journey-upload-teacher-2025" class="image-upload-input" accept="image/*" />
-                    </div>
-                    <div class="teacher-info">
-                        <h4>Giáo viên 2025</h4>
-                        <p>Những lời dặn dò cuối năm và nụ cười của thầy/cô sẽ mãi là ký ức khó phai.</p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="journey-column journey-years">
-                <h3 class="section-subtitle">Hành trình 3 năm</h3>
-
-                <div class="year-card" data-year="2023" data-aos="fade-up">
-                    <div class="timeline-img">
-                        <img id="journey-img-2023" src="images/teacher-2023.jpg" alt="Năm 2023 - Mới làm quen" loading="lazy"
-                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
-                        <label class="image-upload-overlay" for="journey-upload-2023" title="Thay ảnh năm 2023">📷</label>
-                        <input type="file" id="journey-upload-2023" class="image-upload-input" accept="image/*" />
-                    </div>
-                    <div class="timeline-content">
-                        <h3>2023 – Lần đầu gặp gỡ</h3>
-                        <p>Đây là năm chúng ta mới làm quen, bước vào những ngày đầu tiên của hành trình chung.</p>
-                    </div>
-                </div>
-
-                <div class="year-card" data-year="2024" data-aos="fade-up" data-aos-delay="100">
-                    <div class="timeline-img">
-                        <img id="journey-img-2024" src="images/teacher-2024.jpg" alt="Năm 2024 - Đã là bạn bè" loading="lazy"
-                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
-                        <label class="image-upload-overlay" for="journey-upload-2024" title="Thay ảnh năm 2024">📷</label>
-                        <input type="file" id="journey-upload-2024" class="image-upload-input" accept="image/*" />
-                    </div>
-                    <div class="timeline-content">
-                        <h3>2024 – Đã là những người bạn</h3>
-                        <p>Khi cùng nhau vượt qua thử thách, niềm vui và nỗi nhớ, chúng ta gắn kết hơn từng ngày.</p>
-                    </div>
-                </div>
-
-                <div class="year-card" data-year="2025" data-aos="fade-up" data-aos-delay="200">
-                    <div class="timeline-img">
-                        <img id="journey-img-2025" src="images/2025.jpg" alt="Năm 2025 - Thân như không thể xa nhau" loading="lazy"
-                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
-                        <label class="image-upload-overlay" for="journey-upload-2025" title="Thay ảnh năm 2025">📷</label>
-                        <input type="file" id="journey-upload-2025" class="image-upload-input" accept="image/*" />
-                    </div>
-                    <div class="timeline-content">
-                        <h3>2025 – Thân như không thể xa nhau</h3>
-                        <p>Một năm đầy kỷ niệm, nơi tình bạn trở nên sâu sắc và chúng ta luôn ở bên nhau.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    
         <div style="margin-top: 40px; text-align: center; opacity: 0.7; font-size: 0.95rem;">
             <p>Quay lại <a href="index.html">Trang Chủ</a> hoặc xem <a href="guestbook.html">Lưu Bút</a>.</p>
         </div>
@@ -676,5 +670,14 @@ async function name(params) {}
         AOS.init({ duration: 1000, once: true });
     })();
     </script>
+    <script>
+const menuBtn = document.getElementById("menu-toggle");
+const navLinks = document.querySelector(".nav-links");
+
+menuBtn.onclick = () => {
+    navLinks.classList.toggle("show");
+};
+
+</script>
 </body>
 </html>

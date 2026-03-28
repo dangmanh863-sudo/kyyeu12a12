@@ -6,6 +6,53 @@
     <title>Upload Ảnh Thành Viên - 12A12</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+/* ===== MENU MOBILE ===== */
+
+#menu-toggle {
+    display: none;
+    font-size: 1.6rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    #menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        right: 0;
+        width: 220px;
+        height: calc(100vh - 70px);
+        background: white;
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        transform: translateX(100%);
+        transition: 0.3s ease;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        z-index: 999;
+    }
+
+    .nav-links.show {
+        transform: translateX(0);
+    }
+
+    .nav-links a {
+        font-size: 1.1rem;
+    }
+}
+
+/* DARK MODE SUPPORT */
+body.dark .nav-links {
+    background: #1a1a2e;
+}
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Quicksand', sans-serif;
@@ -166,5 +213,20 @@
         reader.readAsDataURL(file);
     }
     </script>
+    <script>
+const menuBtn = document.getElementById("menu-toggle");
+const navLinks = document.querySelector(".nav-links");
+
+menuBtn.onclick = () => {
+    navLinks.classList.toggle("show");
+};
+
+// tự đóng menu khi click link
+document.querySelectorAll(".nav-links a").forEach(link => {
+    link.onclick = () => {
+        navLinks.classList.remove("show");
+    };
+});
+</script>
 </body>
 </html>

@@ -1781,6 +1781,7 @@ body.dark .nav-links {
 </audio>
 
 <script>
+const music = document.getElementById("bg-music");
 
 // Khi user click bất kỳ đâu → bật tiếng
 document.addEventListener("click", () => {
@@ -1788,22 +1789,7 @@ document.addEventListener("click", () => {
     music.play();
 }, { once: true });
 </script>
-<button id="music-btn">🎵</button>
 
-<script>
-const btn = document.getElementById("music-btn");
-const music = document.getElementById("bg-music");
-
-btn.onclick = () => {    navLinks.classList.toggle("show");
-    if (music.paused) {
-        music.play();
-        btn.innerHTML = "🔊";
-    } else {
-        music.pause();
-        btn.innerHTML = "🔇";
-    }
-};          
-</script>
 <script>
 const menuBtn = document.getElementById("menu-toggle");
 const navLinks = document.querySelector(".nav-links");

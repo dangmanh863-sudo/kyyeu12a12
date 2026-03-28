@@ -1781,7 +1781,6 @@ body.dark .nav-links {
 </audio>
 
 <script>
-const music = document.getElementById("bg-music");
 
 // Khi user click bất kỳ đâu → bật tiếng
 document.addEventListener("click", () => {
@@ -1792,7 +1791,8 @@ document.addEventListener("click", () => {
 <button id="music-btn">🎵</button>
 
 <script>
-
+const btn = document.getElementById("music-btn");
+const music = document.getElementById("bg-music");
 
 btn.onclick = () => {    navLinks.classList.toggle("show");
     if (music.paused) {
@@ -1802,7 +1802,7 @@ btn.onclick = () => {    navLinks.classList.toggle("show");
         music.pause();
         btn.innerHTML = "🔇";
     }
-};
+};          
 </script>
 <script>
 const menuBtn = document.getElementById("menu-toggle");

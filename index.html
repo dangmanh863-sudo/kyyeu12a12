@@ -1708,6 +1708,19 @@
     <span id="theme-icon">🌙</span>
 </button>
 
+<audio id="bg-music" autoplay loop muted>
+    <source src="https://popular-pink-wtzs7lcfpi.edgeone.app/Low%20G%20In%20Love%20(ft.%20JustaTee)%20‘L2K’%20The%20Album.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music = document.getElementById("bg-music");
+
+// Khi user click bất kỳ đâu → bật tiếng
+document.addEventListener("click", () => {
+    music.muted = false;
+    music.play();
+}, { once: true });
+</script>
 
 </body>
 </html>

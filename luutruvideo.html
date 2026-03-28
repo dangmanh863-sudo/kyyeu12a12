@@ -9,6 +9,102 @@
     </head>
 <body>
     <style>
+            body {
+    overflow-x: hidden;
+}
+        .nav-links {
+    position: fixed;
+    top: 70px;
+    right: 0;
+    width: 220px;
+    height: 100vh;
+    background: white;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: 0.3s;
+}
+
+.nav-links.show {
+    transform: translateX(0);
+}
+        @media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .teacher {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .teacher-img {
+        width: 60px;
+        height: 60px;
+    }
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+        @media (max-width: 768px) {
+    .journey-grid {
+        grid-template-columns: 1fr;
+    }
+}
+        .container {
+    width: 100%;
+    max-width: 900px;
+    margin: 100px auto 60px;
+    padding: 0 15px;
+}
+/* ===== MENU MOBILE ===== */
+
+#menu-toggle {
+    display: none;
+    font-size: 1.6rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    #menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        right: 0;
+        width: 220px;
+        height: calc(100vh - 70px);
+        background: white;
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        transform: translateX(100%);
+        transition: 0.3s ease;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        z-index: 999;
+    }
+
+    .nav-links.show {
+        transform: translateX(0);
+    }
+
+    .nav-links a {
+        font-size: 1.1rem;
+    }
+}
+
+/* DARK MODE SUPPORT */
+body.dark .nav-links {
+    background: #1a1a2e;
+}
+
         /* Màu mặc định (Light Mode) */
 :root {
     --primary: #3498db;
@@ -190,18 +286,29 @@ header { background: var(--header-bg); }
             .nav-links { display: none; } /* Ẩn menu trên điện thoại */
         }
     </style>
-    <header>
-        <nav>
-            <a class="logo" href="index.html">12A12</a>
-            <ul class="nav-links">
-    <li><a href="index.html">Trang Chủ</a></li>
-    <li><a href="index.html#members">Thành Viên</a></li>
-    <li><a href="gallery.html">Kho Ảnh</a></li>
-    <li><a href="luutruvideo.hatml" class="active" >video</a></li>
-    <li><a href="guestbook.html">Lưu Bút</a></li>
-</ul>
-        </nav>
-    </header>
+<header>
+    <nav>
+        <a class="logo" href="#home">12A12</a>
+
+        <!-- MENU -->
+        <ul class="nav-links">
+            <li><a href="#home">Trang Chủ</a></li>
+            <li><a href="#members">Thành Viên</a></li>
+            <li><a href="gallery.html">Kho Ảnh</a></li>
+            <li><a href="luutruvideo.html">Video</a></li>
+            <li><a href="journey.html">Hành Trình</a></li>
+            <li><a href="guestbook.html">Lưu Bút</a></li>
+        </ul>
+
+        <!-- NÚT MENU MOBILE -->
+        <button id="menu-toggle">☰</button>
+
+        <!-- NÚT KHÁC -->
+        <button id="edit-toggle">✏️</button>
+        <button id="bg-toggle">🖼️</button>
+        <button id="theme-toggle">🌙</button>
+    </nav>
+</header>
 
     <main class="container">
         <div class="gallery-header">
@@ -248,6 +355,30 @@ header { background: var(--header-bg); }
     <footer>
         <p>Tập thể Lớp 12A12 | Niên khóa 2023 - 2026</p>
     </footer>
+<script>
+const menuBtn = document.getElementById("menu-toggle");
+const navLinks = document.querySelector(".nav-links");
 
+menuBtn.onclick = () => {
+    navLinks.classList.toggle("show");
+};
+
+// tự đóng menu khi click link
+document.querySelectorAll(".nav-links a").forEach(link => {
+    link.onclick = () => {
+        navLinks.classList.remove("show");
+    };
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const menuBtn = document.getElementById("menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+
+    menuBtn.onclick = () => {
+        navLinks.classList.toggle("show");
+    };
+});
+</script>
 </body>
 </html>

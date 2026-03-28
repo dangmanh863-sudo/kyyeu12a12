@@ -698,7 +698,7 @@ body.dark .nav-links {
     </div>
 
     <div id="graduation-hats"></div>
-
+<iframe src="music.html" style="display:none;"></iframe>
 <header>
     <nav>
         <a class="logo" href="#home">12A12</a>
@@ -1780,7 +1780,7 @@ body.dark .nav-links {
 </audio>
 
 <script>
-const music = document.getElementById("bg-music");
+
 
 // Khi user click bất kỳ đâu → bật tiếng
 document.addEventListener("click", () => {
@@ -1817,6 +1817,19 @@ document.querySelectorAll(".nav-links a").forEach(link => {
         navLinks.classList.remove("show");
     };
 });
+</script>
+<script>
+const music = document.getElementById("bg-music");
+// lưu trạng thái
+music.onplay = () => localStorage.setItem("music", "on");
+music.onpause = () => localStorage.setItem("music", "off");
+
+// load lại
+window.onload = () => {
+    if (localStorage.getItem("music") === "on") {
+        music.play();
+    }
+};
 </script>
 </body>
 </html>

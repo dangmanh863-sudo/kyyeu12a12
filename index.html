@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12A12 | KỶ YẾU THANH XUÂN</title>
+    <meta name="description" content="Trang kỷ yếu 12A12 - lưu giữ kỷ niệm, ảnh bạn bè và lời chúc.">
+    <meta name="keywords" content="12A12, kỷ yếu, thanh xuân, lớp 12, lưu bút, bạn bè">
+    <meta property="og:title" content="12A12 | Kỷ Yếu Thanh Xuân">
+    <meta property="og:description" content="Mời bạn ghé thăm trang kỷ yếu 12A12 - lưu giữ kỷ niệm và lời chúc.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/og-image.jpg">
+    <link rel="icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* --- Falling hats (graduation cap) --- */
+        #graduation-hats {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Không cản trở việc click chuột */
+            z-index: 10; /* Nằm trên nội dung nhưng dưới menu */
+            overflow: hidden;
+        }
+
+        .hat {
+            position: absolute;
+            top: -60px;
+            width: 2.2rem;
+            height: 2.2rem;
+            --hat-scale: 1;
+            --hat-drift: 0px;
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem;
+            color: #2c3e50;
+            opacity: 0.8;
+            transform: translate3d(0, 0, 0) rotate(0deg) scale(var(--hat-scale));
+            will-change: transform, opacity;
+            animation: hatFall linear infinite;
+        }
+
+        .hat::before {
+            content: "🎓";
+            display: block;
+            line-height: 1;
+        }
+
+        @keyframes hatFall {
+            0% {
+                transform: translate3d(0, 0, 0) rotate(0deg) scale(var(--hat-scale));
+                opacity: 0;
+            }
+            25% {
+                transform: translate3d(var(--hat-drift), 25vh, 0) rotate(90deg) scale(var(--hat-scale));
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate3d(calc(var(--hat-drift) * -1), 55vh, 0) rotate(180deg) scale(var(--hat-scale));
+                opacity: 0.8;
+            }
+            75% {
+                transform: translate3d(var(--hat-drift), 82vh, 0) rotate(270deg) scale(var(--hat-scale));
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate3d(0, 110vh, 0) rotate(360deg) scale(var(--hat-scale));
+                opacity: 0;
+            }
+        }
+
+        /* --- Reset & Variables --- */
+        :root {
+            --primary: #3498db;
+            --accent: #e74c3c;
+            --bg: #fdfdfd;
+            --text-dark: #2c3e50;
+            --bg-image: none;
+            --bg-size: cover;
+            --bg-position: center;
+            --bg-repeat: no-repeat;
+            --hero-bg-image: url('images/hero-bg.jpg');
+            --hero-bg-size: cover;
+            --hero-bg-position: center;
+            --hero-bg-repeat: no-repeat;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg);
+            background-image: var(--bg-image);
+            background-size: var(--bg-size);
+            background-position: var(--bg-position);
+            background-repeat: var(--bg-repeat);
+            color: var(--text-dark);
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Ngăn thanh cuộn ngang do hiệu ứng rơi */
+            position: relative; /* Cần thiết cho hiệu ứng rơi */
+            padding-top: 80px; /* Giữ nội dung không bị che bởi header cố định */
+            min-height: 100vh;
+        }
+
+        /* --- Intro Overlay --- */
+        .intro-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: grid;
+            place-items: center;
+            z-index: 2000;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+
+        .hero-edit-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            background: rgba(0, 0, 0, 0.45);
+            color: white;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            z-index: 100;
+        }
+
+        body.edit-mode .hero-edit-btn {
+            display: grid;
+            place-items: center;
+        }
+
+        .intro-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            display: grid;
+            place-items: center;
+            z-index: 2100;
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        .overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .modal {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 22px;
+            border-radius: 18px;
+            max-width: 460px;
+            width: 92%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        body.dark .modal {
+            background: rgba(20, 20, 40, 0.95);
+            color: #fff;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+        }
+
+        .modal .field {
+            margin-bottom: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+        }
+
+        body.dark .modal-actions button {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.18);
+            color: #fff;
+        }
+
+        .intro-content {
+            text-align: center;
+            max-width: 520px;
+            padding: 30px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.12);
+            box-shadow: 0 20px 70px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            color: #fff;
+        }
+
+        .intro-content h1 {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            letter-spacing: 0.05em;
+        }
+
+        .intro-content p {
+            margin-bottom: 24px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .intro-content button {
+            padding: 14px 22px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.16);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .intro-content button:hover {
+            background: rgba(255,255,255,0.26);
+            transform: translateY(-1px);
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            gap: 16px;
+        }
+
+        .logo {
+            position: relative;
+            padding-left: 2.6rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .logo::before {
+            content: "🎓";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2rem;
+            height: 2rem;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(52, 152, 219, 0.18);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-size: 1.25rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        #theme-toggle,
+        #bg-toggle {
+            background: transparent;
+            border: 1px solid rgba(0,0,0,0.12);
+            border-radius: 999px;
+            width: 40px;
+            height: 40px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: background 0.2s ease, border 0.2s ease;
+        }
+
+        #theme-toggle:hover,
+        #bg-toggle:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        /* Hiện nút thay nền chỉ khi ở chế độ chỉnh sửa */
+        #bg-toggle {
+            display: none;
+        }
+
+        body.edit-mode #bg-toggle {
+            display: grid;
+        }
+
+        body.dark {
+            --bg: #1a1a2e;
+            --text-dark: #f5f6fa;
+            --primary: #ff6b6b;
+            --accent: #4ecdc4;
+            background-color: var(--bg);
+            color: var(--text-dark);
+        }
+
+        body.dark header {
+            background: rgba(20, 20, 40, 0.85);
+        }
+
+        body.dark .card {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.12);
+        }
+
+        body.dark .card-info h3 {
+            color: var(--primary);
+        }
+
+        body.dark .card-info p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        body.dark footer {
+            background: #0f0f1d;
+        }
+
+        body.dark input,
+        body.dark textarea {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.12);
+            color: #eee;
+        }
+
+        /* --- Hero Section --- */
+        #home {
+            position: relative;
+            height: 100vh;
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), var(--hero-bg-image);
+            background-size: auto, var(--hero-bg-size);
+            background-position: center, var(--hero-bg-position);
+            background-repeat: no-repeat, var(--hero-bg-repeat);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        #home h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+        }
+
+        #home p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        /* --- Members Section --- */
+        .container {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+            position: relative; /* Cần thiết cho AOS */
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+        }
+
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.4s ease, opacity 0.6s ease;
+            border: 1px solid #eee;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .card .avatar-input {
+            display: none;
+        }
+
+        .card .upload-overlay {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            display: none;
+            place-items: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            font-size: 16px;
+            border: 1px solid rgba(255,255,255,0.55);
+        }
+
+        body.edit-mode .card .upload-overlay {
+            display: grid;
+        }
+
+        body.edit-mode .card:hover .upload-overlay {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+
+        .card-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-info h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .card-info p {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            position: relative;
+            z-index: 20; /* Nằm trên hiệu ứng nón */
+        }
+
+        footer h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #home h1 { font-size: 3rem; }
+            .section-title { font-size: 2.2rem; }
+            #music-box { bottom: 10px; left: 10px; transform: scale(0.9); }
+        }
+
+        /* --- Back to top button --- */
+        #back-to-top {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(0, 0, 0, 0.65);
+            color: white;
+            font-size: 1.25rem;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            z-index: 1200;
+        }
+
+        #back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        section {
+            scroll-margin-top: 110px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div id="intro-overlay" class="intro-overlay" aria-label="Giới thiệu"> 
+        <div class="intro-content">
+            <h1>12A12 – Kỷ yếu thanh xuân</h1>
+            <p>Chào mừng bạn đến với trang kỷ yếu. Nhấn "Bắt đầu" để xem kỷ niệm của chúng ta.</p>
+            <button id="intro-enter" type="button">Bắt đầu</button>
+        </div>
+    </div>
+
+    <div id="bg-settings-modal" class="overlay hidden" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="bg-settings-title">
+            <h2 id="bg-settings-title">Cài đặt nền</h2>
+            <p>Chọn ảnh nền và điều chỉnh cách hiển thị. Ảnh sẽ được lưu trên trình duyệt của bạn.</p>
+
+            <div class="field">
+                <label for="bg-target-select">Áp dụng cho</label>
+                <select id="bg-target-select">
+                    <option value="page">Toàn trang (thành viên)</option>
+                    <option value="hero">Trang chủ (12A12 - Mãi Là Anh Em)</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="bg-image-input">Ảnh nền</label>
+                <input type="file" id="bg-image-input" accept="image/*" />
+            </div>
+
+            <div class="field">
+                <label for="bg-size-select">Kích thước</label>
+                <select id="bg-size-select">
+                    <option value="cover">Phủ toàn</option>
+                    <option value="contain">Gọn</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="bg-repeat-select">Lặp lại</label>
+                <select id="bg-repeat-select">
+                    <option value="no-repeat">Không</option>
+                    <option value="repeat">Lặp</option>
+                    <option value="repeat-x">Lặp ngang</option>
+                    <option value="repeat-y">Lặp dọc</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="bg-position-select">Vị trí</label>
+                <select id="bg-position-select">
+                    <option value="center">Giữa</option>
+                    <option value="top">Trên</option>
+                    <option value="bottom">Dưới</option>
+                    <option value="left">Trái</option>
+                    <option value="right">Phải</option>
+                </select>
+            </div>
+
+            <div class="modal-actions">
+                <button id="bg-apply-btn" type="button">Áp dụng</button>
+                <button id="bg-reset-btn" type="button">Đặt lại</button>
+                <button id="bg-close-btn" type="button">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="graduation-hats"></div>
+
+    <header>
+        <nav>
+            <a class="logo" href="#home">12A12</a>
+
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a role="menuitem" href="#home">Trang Chủ</a></li>
+                <li role="none"><a role="menuitem" href="#members">Thành Viên</a></li>
+                <li role="none"><a role="menuitem" href="gallery.html">Kho Ảnh</a></li>
+                <li role="none"><a role="menutiem" href="luutruvideo.html">video</video></a></li>
+                <li role="none"><a role="menuitem" href="journey.html">Hành Trình 3 Năm</a></li>
+                <li role="none"><a role="menuitem" href="guestbook.html">Lưu Bút</a></li>
+            </ul>
+
+            <button id="edit-toggle" type="button" aria-label="Bật chế độ chỉnh sửa">✏️</button>
+            <button id="bg-toggle" type="button" aria-label="Thay nền">🖼️</button>
+            <button id="theme-toggle" type="button" aria-label="Chuyển sang chế độ tối">🌙</button>
+        </nav>
+    </header>
+
+    <section id="home">
+        <button id="hero-bg-edit" class="hero-edit-btn" type="button" aria-label="Chỉnh nền trang chủ">🖼️</button>
+        <div data-aos="zoom-in"></div>
+            <h1>12A12 - Mãi Là Anh Em</h1>
+            <p>Niên khóa 2023 - 2026 • Hành trình rực rỡ</p>
+        </div>
+    </section>
+
+    <div class="container" id="members">
+        <h2 class="section-title" data-aos="fade-up"
+        >43 Mảnh Ghép Thanh Xuân</h2>
+        <div class="member-grid" id="list">
+            <div class="card visible">
+
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>
+                        <label class="upload-overlay" for="avatar-input-1" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-1" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Phạm An An</h3>
+                        <p>"Chúc bạn luôn vui vẻ và thành công!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>
+                        <label class="upload-overlay" for="avatar-input-2" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-2" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Phan Quốc An</h3>
+                        <p>"Cảm ơn những kỷ niệm đẹp bên nhau!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>
+                        <label class="upload-overlay" for="avatar-input-3" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-3" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Thái Hà An</h3>
+                        <p>"Bạn mãi là người bạn thân thiết của tôi!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-4" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-4" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Dương Tường Anh</h3>
+                        <p>"Chúc bạn luôn hạnh phúc và bình an!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-5" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-5" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Trần Quỳnh Anh</h3>
+                        <p>"Cùng nhau tạo nên những kỷ niệm đẹp!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-6" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-6" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Trần Lê Chí Bảo</h3>
+                        <p>"Bạn là người bạn tuyệt vời nhất!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-7" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-7" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Văn Thành Công</h3>
+                        <p>"Chúc bạn luôn đạt được ước mơ!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-8" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-8" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Hạnh Thùy Dương</h3>
+                        <p>"Cảm ơn bạn đã luôn ở bên cạnh!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-9" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-9" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Phan Trường Gia</h3>
+                        <p>"Bạn mãi là anh em của tôi!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">                     
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-10" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-10" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Hà Gia Hân</h3>
+                        <p>"Chúc bạn luôn vui tươi và năng động!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-11" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-11" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Phạm Thanh Hiền</h3>
+                        <p>"Cùng nhau bước qua những năm tháng!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-12" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-12" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Trương Nguyễn Huy Hoàng</h3>
+                        <p>"Bạn là người bạn thân nhất của tôi!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-13" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-13" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Thị Thanh Huyền</h3>
+                        <p>"Chúc bạn luôn thành công trong cuộc sống!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-14" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-14" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Ái Ngọc Khuê</h3>
+                        <p>"Cảm ơn những khoảnh khắc đẹp bên nhau!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-15" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-15" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Trần Thiên Kỳ</h3>
+                        <p>"Bạn mãi là người bạn của tôi!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-16" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-16" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Ngọc Bảo Lâm</h3>
+                        <p>"Chúc bạn luôn hạnh phúc và vui vẻ!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-17" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-17" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Võ Phan Quế Lâm</h3>
+                        <p>"Cùng nhau tạo nên kỷ niệm đẹp!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-18" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-18" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Thị Ngọc Linh</h3>
+                        <p>"Bạn là người bạn tuyệt vời!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                            <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-19" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-19" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Trúc Linh</h3>
+                        <p>"Chúc bạn luôn đạt được mục tiêu!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-20" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-20" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Thành Long</h3>
+                        <p>"Cảm ơn bạn đã luôn hỗ trợ!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-21" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-21" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Phạm Thị Tuyết Mai</h3>
+                        <p>"Bạn mãi là anh em thân thiết!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-22" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-22" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Đặng Sỹ Mạnh</h3>
+                        <p>"Chúc bạn luôn vui tươi!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-23" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-23" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Trần Dương An Miên</h3>
+                        <p>"Cùng nhau bước qua những năm!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-24" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-24" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Văn Minh</h3>
+                        <p>"Bạn là người bạn thân nhất!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-25" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-25" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Trần Thiện Nhân</h3>
+                        <p>"Chúc bạn thành công trong tương lai!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-26" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-26" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Mai Yến Nhi </h3>
+                        <p>"Cảm ơn những kỷ niệm đẹp!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-27" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-27" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Phạm Phúc Phương Nhi</h3>
+                        <p>"Bạn mãi là người bạn của tôi!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-28" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-28" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Lê Tâm Như</h3>
+                        <p>"Chúc bạn luôn hạnh phúc!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-29" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-29" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Hoàng Thiên Phước</h3>
+                        <p>"Cùng nhau tạo nên kỷ niệm!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-30" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-30" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Trần Minh Quân</h3>
+                        <p>"Bạn là người bạn tuyệt vời nhất!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-31" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-31" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Phan Ninh Trung Tấn</h3>
+                        <p>"Chúc bạn luôn đạt được ước mơ!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-32" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-32" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Tôn Thất Thắng</h3>
+                        <p>"Cảm ơn bạn đã luôn ở bên!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-33" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-33" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Hồ Thị Anh Thư</h3>
+                        <p>"Bạn mãi là anh em của tôi!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-34" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-34" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Lê Văn Tiên</h3>
+                        <p>"Chúc bạn luôn vui vẻ!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-35" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-35" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Thị Huyền Trang</h3>
+                        <p>"Cùng nhau bước qua năm tháng!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-36" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-36" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Hoàng Đức Trung</h3>
+                        <p>"Bạn là người bạn thân nhất!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-37" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-37" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Ngọc Thiện Trung</h3>
+                        <p>"Chúc bạn thành công!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-38" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-38" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Trần Nguyễn Anh Tuấn</h3>
+                        <p>"Cảm ơn những khoảnh khắc đẹp!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-39" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-39" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Trương Quốc Việt</h3>
+                        <p>"Bạn mãi là người bạn của tôi!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-40" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-40" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Mai Vinh</h3>
+                        <p>"Chúc bạn luôn hạnh phúc!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-41" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-41" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Diệp Thanh Vy</h3>
+                        <p>"Cùng nhau tạo nên kỷ niệm đẹp!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                        <label class="upload-overlay" for="avatar-input-42" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-42" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Nguyễn Thị Ngọc Vy</h3>
+                        <p>"Bạn là người bạn tuyệt vời!"</p>
+                    </div>
+                </div><div class="card visible">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Red-Minimalist-Brunch-Club-Logo-1" border="0"></a>                        <label class="upload-overlay" for="avatar-input-43" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-43" class="avatar-input" accept="image/*">
+                    </div>
+                    <div class="card-info">
+                        <h3>Phạm Xuân Tường Vy</h3>
+                        <p>"Chúc bạn luôn đạt được mục tiêu!"</p>
+                    </div>
+                </div></div>
+            </div>
+    </div>
+
+    <footer>
+                <div class="container" style="margin: 0 auto; padding: 0 20px;"></div>
+            <h2>Tạm biệt nhé, 12A12!</h2>
+            <p>Lưu giữ bởi tập thể lớp 12A12
+            </p>
+            <div class="container" style="margin: 1rem auto; padding: 0 0px;"></div>
+            <h2> ..... </h2></p>
+        </div>
+    </footer>
+    
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="members-data.js"></script>
+    <script>
+    (function () {
+        const themeToggle = document.getElementById('theme-toggle');
+        const editToggle = document.getElementById('edit-toggle');
+        const backToTop = document.getElementById('back-to-top');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sections = Array.from(document.querySelectorAll('section[id]'));
+
+        function escapeHTML(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function setTheme(mode) {
+            document.body.classList.toggle('dark', mode === 'dark');
+            localStorage.setItem('12A12_theme', mode);
+            if (themeToggle) {
+                themeToggle.innerText = mode === 'dark' ? '☀️' : '🌙';
+                themeToggle.setAttribute('aria-label', mode === 'dark' ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối');
+            }
+        }
+
+        function initTheme() {
+            const saved = localStorage.getItem('12A12_theme');
+            if (saved === 'dark' || saved === 'light') {
+                setTheme(saved);
+                return;
+            }
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            setTheme(prefersDark ? 'dark' : 'light');
+        }
+
+        function handleThemeToggle() {
+            const isDark = document.body.classList.contains('dark');
+            setTheme(isDark ? 'light' : 'dark');
+        }
+
+        function isEditMode() {
+            return localStorage.getItem('12A12_edit_mode') === '1';
+        }
+
+        function setEditMode(enabled) {
+            document.body.classList.toggle('edit-mode', enabled);
+            if (editToggle) {
+                editToggle.innerText = enabled ? '🔒 Đóng chỉnh sửa' : '✏️ Chỉnh sửa';
+                editToggle.setAttribute('aria-label', enabled ? 'Tắt chế độ chỉnh sửa' : 'Bật chế độ chỉnh sửa');
+            }
+            if (!enabled) {
+                closeBgModal();
+            }
+            localStorage.setItem('12A12_edit_mode', enabled ? '1' : '0');
+        }
+
+        const bgToggle = document.getElementById('bg-toggle');
+        const bgModal = document.getElementById('bg-settings-modal');
+        const bgTargetSelect = document.getElementById('bg-target-select');
+        const bgImageInput = document.getElementById('bg-image-input');
+        const bgSizeSelect = document.getElementById('bg-size-select');
+        const bgRepeatSelect = document.getElementById('bg-repeat-select');
+        const bgPositionSelect = document.getElementById('bg-position-select');
+        const bgApplyBtn = document.getElementById('bg-apply-btn');
+        const bgResetBtn = document.getElementById('bg-reset-btn');
+        const bgCloseBtn = document.getElementById('bg-close-btn');
+        const heroBgEditBtn = document.getElementById('hero-bg-edit');
+
+        let bgModalTarget = 'page';
+
+        function applyBackgroundSettings({ image, size, repeat, position }) {
+            const root = document.documentElement;
+                        if (image !== undefined) {
+                root.style.setProperty('--bg-image', image ? `url(${image})` : 'none');
+            }
+            if (size !== undefined) {
+                root.style.setProperty('--bg-size', size || 'cover');
+            }
+            if (repeat !== undefined) {
+                root.style.setProperty('--bg-repeat', repeat || 'no-repeat');
+            }
+            if (position !== undefined) {
+                root.style.setProperty('--bg-position', position || 'center');
+            }
+
+        }
+
+        function applyHeroBackgroundSettings({ image, size, repeat, position }) {
+            const root = document.documentElement;
+            if (image !== undefined) {
+                root.style.setProperty('--hero-bg-image', image ? `url(${image})` : 'none');
+            }
+            if (size !== undefined) {
+                root.style.setProperty('--hero-bg-size', size || 'cover');
+            }
+            if (repeat !== undefined) {
+                root.style.setProperty('--hero-bg-repeat', repeat || 'no-repeat');
+            }
+            if (position !== undefined) {
+                root.style.setProperty('--hero-bg-position', position || 'center');
+            }
+        }
+
+        function loadBackgroundSettings() {
+            const image = localStorage.getItem('12A12_bg_image');
+            const size = localStorage.getItem('12A12_bg_size') || 'cover';
+            const repeat = localStorage.getItem('12A12_bg_repeat') || 'no-repeat';
+            const position = localStorage.getItem('12A12_bg_position') || 'center';
+            applyBackgroundSettings({ image, size, repeat, position });
+            if (bgSizeSelect) bgSizeSelect.value = size;
+            if (bgRepeatSelect) bgRepeatSelect.value = repeat;
+            if (bgPositionSelect) bgPositionSelect.value = position;
+        }
+
+        function loadHeroBackgroundSettings() {
+            const storedImage = localStorage.getItem('12A12_hero_bg_image');
+            const image = storedImage !== null ? storedImage : undefined;
+            const size = localStorage.getItem('12A12_hero_bg_size') || 'cover';
+            const repeat = localStorage.getItem('12A12_hero_bg_repeat') || 'no-repeat';
+            const position = localStorage.getItem('12A12_hero_bg_position') || 'center';
+            applyHeroBackgroundSettings({ image, size, repeat, position });
+
+            if (bgSizeSelect) bgSizeSelect.value = size;
+            if (bgRepeatSelect) bgRepeatSelect.value = repeat;
+            if (bgPositionSelect) bgPositionSelect.value = position;
+        }
+
+        function saveBackgroundSettings({ image, size, repeat, position }) {
+            if (image !== undefined) {
+                if (image) localStorage.setItem('12A12_bg_image', image);
+                else localStorage.removeItem('12A12_bg_image');
+            }
+            if (size) localStorage.setItem('12A12_bg_size', size);
+            if (repeat) localStorage.setItem('12A12_bg_repeat', repeat);
+            if (position) localStorage.setItem('12A12_bg_position', position);
+            applyBackgroundSettings({ image, size, repeat, position });
+        }
+
+        function saveHeroBackgroundSettings({ image, size, repeat, position }) {
+            if (image !== undefined) {
+                if (image) localStorage.setItem('12A12_hero_bg_image', image);
+                else localStorage.removeItem('12A12_hero_bg_image');
+            }
+            if (size) localStorage.setItem('12A12_hero_bg_size', size);
+            if (repeat) localStorage.setItem('12A12_hero_bg_repeat', repeat);
+            if (position) localStorage.setItem('12A12_hero_bg_position', position);
+            applyHeroBackgroundSettings({ image, size, repeat, position });
+        }
+
+        function resetBackgroundSettings() {
+            localStorage.removeItem('12A12_bg_image');
+            localStorage.removeItem('12A12_bg_size');
+            localStorage.removeItem('12A12_bg_repeat');
+            localStorage.removeItem('12A12_bg_position');
+            applyBackgroundSettings({ image: null, size: 'cover', repeat: 'no-repeat', position: 'center' });
+            if (bgSizeSelect) bgSizeSelect.value = 'cover';
+            if (bgRepeatSelect) bgRepeatSelect.value = 'no-repeat';
+            if (bgPositionSelect) bgPositionSelect.value = 'center';
+        }
+
+        function resetHeroBackgroundSettings() {
+            localStorage.removeItem('12A12_hero_bg_image');
+            localStorage.removeItem('12A12_hero_bg_size');
+            localStorage.removeItem('12A12_hero_bg_repeat');
+            localStorage.removeItem('12A12_hero_bg_position');
+            applyHeroBackgroundSettings({ image: null, size: 'cover', repeat: 'no-repeat', position: 'center' });
+            if (bgSizeSelect) bgSizeSelect.value = 'cover';
+            if (bgRepeatSelect) bgRepeatSelect.value = 'no-repeat';
+            if (bgPositionSelect) bgPositionSelect.value = 'center';
+        }
+
+        function openBgModal(target = 'page') {
+            if (!isEditMode()) return;
+            if (!bgModal) return;
+
+            bgModalTarget = target;
+            if (bgTargetSelect) bgTargetSelect.value = target;
+
+            if (target === 'hero') {
+                loadHeroBackgroundSettings();
+            } else {
+                loadBackgroundSettings();
+            }
+
+            bgModal.classList.remove('hidden');
+            bgModal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeBgModal() {
+            if (!bgModal) return;
+            bgModal.classList.add('hidden');
+            bgModal.setAttribute('aria-hidden', 'true');
+        }
+
+        function promptEditMode() {
+            const password = prompt('Nhập mật khẩu để bật chế độ chỉnh sửa:');
+            if (password === null) return; // cancel
+            const isValid = password === '123456';
+            if (isValid) {
+                setEditMode(true);
+                alert('Chế độ chỉnh sửa đã được bật. Bạn có thể thay ảnh khi hover lên thẻ.');
+            } else {
+                alert('Mật khẩu không đúng.');
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateBackToTop() {
+            if (!backToTop) return;
+            if (window.scrollY > 400) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        }
+
+        function highlightNav() {
+            const scrollPosition = window.scrollY + 120; // offset header
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const height = section.offsetHeight;
+                const id = section.id;
+
+                const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+                if (!link) return;
+
+                if (scrollPosition >= top && scrollPosition < top + height) {
+                    link.classList.add('active');
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.classList.remove('active');
+                    link.removeAttribute('aria-current');
+                }
+            });
+        }
+
+        function initScrollSpy() {
+            highlightNav();
+            window.addEventListener('scroll', () => {
+                highlightNav();
+                updateBackToTop();
+            }, { passive: true });
+        }
+
+        function createHats() {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                // Tôn trọng thiết lập giảm chuyển động của người dùng
+                return;
+            }
+
+            const container = document.getElementById('graduation-hats');
+            if (!container) return;
+            const hatCount = 18;
+
+            for (let i = 0; i < hatCount; i++) {
+                const hat = document.createElement('div');
+                hat.className = 'hat';
+                hat.style.left = Math.random() * 100 + 'vw';
+                hat.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                hat.style.animationDelay = Math.random() * 5 + 's';
+
+                const scale = Math.random() * 0.5 + 0.8;
+                hat.style.setProperty('--hat-scale', scale.toFixed(2));
+
+                // Một chút drift để nón trông tự nhiên hơn khi rơi
+                const drift = (Math.random() * 80 - 40).toFixed(1);
+                hat.style.setProperty('--hat-drift', `${drift}px`);
+
+                container.appendChild(hat);
+            }
+        }
+
+        function getStoredAvatar(memberId) {
+            try {
+                return localStorage.getItem(`12A12_avatar_${memberId}`);
+            } catch {
+                return null;
+            }
+        }
+
+        function createMemberCards() {
+            const listContainer = document.getElementById('list');
+            if (!listContainer || !membersData) return;
+
+            membersData.forEach((member) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const imageUrl = getStoredAvatar(member.id) || member.image;
+
+                card.innerHTML = `
+                    <div class="card-img-wrap">
+                        <img src="${imageUrl}" alt="${member.name}" loading="lazy"
+                            onerror="this.onerror=null; this.src='https://via.placeholder.com/300x450?text=${member.name}';">
+                        <label class="upload-overlay" for="avatar-input-${member.id}" title="Đổi ảnh">
+                            📷
+                        </label>
+                        <input type="file" id="avatar-input-${member.id}" class="avatar-input" accept="image/*" />
+                    </div>
+                    <div class="card-info">
+                        <h3>${member.name}</h3>
+                        <p>"${member.message}"</p>
+                    </div>
+                `;
+
+                listContainer.appendChild(card);
+
+                const fileInput = card.querySelector(`#avatar-input-${member.id}`);
+                const imgElement = card.querySelector('img');
+
+                fileInput.addEventListener('change', (event) => {
+                    if (!isEditMode()) return;
+
+                    const file = event.target.files[0];
+                    if (!file) return;
+
+                    if (!file.type.startsWith('image/')) return;
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const dataUrl = e.target.result;
+                        imgElement.src = dataUrl;
+                        try {
+                            localStorage.setItem(`12A12_avatar_${member.id}`, dataUrl);
+                        } catch {
+                            // Ignore storage failures
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+        }
+
+        function initMemberScrollReveal() {
+            const cards = document.querySelectorAll('#list .card');
+            if (!cards.length || !window.IntersectionObserver) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px 0px -20% 0px',
+                threshold: 0.2,
+            });
+
+            cards.forEach(card => observer.observe(card));
+        }
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', handleThemeToggle);
+        }
+
+        if (editToggle) {
+            editToggle.addEventListener('click', () => {
+                if (isEditMode()) {
+                    setEditMode(false);
+                } else {
+                    promptEditMode();
+                }
+            });
+        }
+
+        if (bgToggle) {
+            bgToggle.addEventListener('click', () => {
+                if (!isEditMode()) {
+                    alert('Vui lòng bật chế độ chỉnh sửa để thay nền.');
+                    return;
+                }
+                openBgModal('page');
+            });
+        }
+
+        if (heroBgEditBtn) {
+            heroBgEditBtn.addEventListener('click', () => {
+                if (!isEditMode()) {
+                    alert('Vui lòng bật chế độ chỉnh sửa để thay nền.');
+                    return;
+                }
+                openBgModal('hero');
+            });
+        }
+
+        if (bgTargetSelect) {
+            bgTargetSelect.addEventListener('change', () => {
+                const target = bgTargetSelect.value;
+                bgModalTarget = target;
+                if (target === 'hero') {
+                    loadHeroBackgroundSettings();
+                } else {
+                    loadBackgroundSettings();
+                }
+            });
+        }
+
+        if (bgApplyBtn) {
+            bgApplyBtn.addEventListener('click', () => {
+                const size = bgSizeSelect?.value;
+                const repeat = bgRepeatSelect?.value;
+                const position = bgPositionSelect?.value;
+                if (bgModalTarget === 'hero') {
+                    saveHeroBackgroundSettings({ size, repeat, position });
+                } else {
+                    saveBackgroundSettings({ size, repeat, position });
+                }
+                closeBgModal();
+            });
+        }
+
+        if (bgResetBtn) {
+            bgResetBtn.addEventListener('click', () => {
+                if (!confirm('Bạn có muốn đặt lại nền về mặc định không?')) return;
+                if (bgModalTarget === 'hero') {
+                    resetHeroBackgroundSettings();
+                } else {
+                    resetBackgroundSettings();
+                }
+            });
+        }
+
+        if (bgCloseBtn) {
+            bgCloseBtn.addEventListener('click', closeBgModal);
+        }
+
+        if (bgModal) {
+            bgModal.addEventListener('click', (event) => {
+                if (event.target === bgModal) {
+                    closeBgModal();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeBgModal();
+            }
+        });
+
+        if (bgImageInput) {
+            bgImageInput.addEventListener('change', (event) => {
+                if (!isEditMode()) return;
+
+                const file = event.target.files[0];
+                if (!file) return;
+                if (!file.type.startsWith('image/')) return;
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const dataUrl = e.target.result;
+                    if (bgModalTarget === 'hero') {
+                        saveHeroBackgroundSettings({ image: dataUrl });
+                    } else {
+                        saveBackgroundSettings({ image: dataUrl });
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        const introOverlay = document.getElementById('intro-overlay');
+        const introEnter = document.getElementById('intro-enter');
+
+        function hideIntro() {
+            if (!introOverlay) return;
+            introOverlay.classList.add('hidden');
+            setTimeout(() => {
+                introOverlay.remove();
+            }, 600);
+        }
+
+        if (introEnter) {
+            introEnter.addEventListener('click', hideIntro);
+        }
+
+        if (introOverlay) {
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') hideIntro();
+            });
+            setTimeout(hideIntro, 4200);
+        }
+
+        if (backToTop) {
+            backToTop.addEventListener('click', scrollToTop);
+        }
+
+        initTheme();
+        loadBackgroundSettings();
+        loadHeroBackgroundSettings();
+        setEditMode(isEditMode());
+        initScrollSpy();
+
+        createHats();
+        createMemberCards();
+        initMemberScrollReveal();
+
+        AOS.init({ duration: 1000, once: true });
+        AOS.refresh();
+    })();
+    </script>
+
+    <button id="back-to-top" type="button" aria-label="Lên đầu trang">↑</button>
+    <button id="theme-toggle" class="theme-btn">
+    <span id="theme-icon">🌙</span>
+</button>
+
+
+</body>
+</html>
+

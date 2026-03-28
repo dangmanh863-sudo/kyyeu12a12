@@ -1818,19 +1818,7 @@ document.querySelectorAll(".nav-links a").forEach(link => {
     };
 });
 </script>
-<script>
-const music = document.getElementById("bg-music");
-// lưu trạng thái
-music.onplay = () => localStorage.setItem("music", "on");
-music.onpause = () => localStorage.setItem("music", "off");
 
-// load lại
-window.onload = () => {
-    if (localStorage.getItem("music") === "on") {
-        music.play();
-    }
-};
-</script>
 </body>
 </html>
 

@@ -16,6 +16,20 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
+        #music-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 999;
+}
         /* --- Falling hats (graduation cap) --- */
         #graduation-hats {
             position: fixed;
@@ -1721,7 +1735,21 @@ document.addEventListener("click", () => {
     music.play();
 }, { once: true });
 </script>
+<button id="music-btn">🎵</button>
 
+<script>
+const btn = document.getElementById("music-btn");
+
+btn.onclick = () => {
+    if (music.paused) {
+        music.play();
+        btn.innerHTML = "🔊";
+    } else {
+        music.pause();
+        btn.innerHTML = "🔇";
+    }
+};
+</script>
 </body>
 </html>
 

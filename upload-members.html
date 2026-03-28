@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Ảnh Thành Viên - 12A12</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #3498db;
+            margin-bottom: 30px;
+        }
+        .upload-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .upload-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .member-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .current-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+        }
+        .upload-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .upload-btn:hover {
+            background: #2980b9;
+        }
+        .file-input {
+            display: none;
+        }
+        .status {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+        .success { color: #27ae60; }
+        .error { color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <h1>Upload Ảnh Thành Viên 12A12</h1>
+    <div class="upload-grid" id="uploadGrid"></div>
+
+    <script>
+    // Load members data
+    fetch('members-data.js')
+        .then(response => response.text())
+        .then(text => {
+            // Extract the array from the JS file
+            const start = text.indexOf('[');
+            const end = text.lastIndexOf(']') + 1;
+            const jsonData = text.substring(start, end);
+            const members = JSON.parse(jsonData);
+            renderUploadGrid(members);
+        })
+        .catch(error => {
+            console.error('Error loading members data:', error);
+            // Fallback to generate 43 members
+            const members = [];
+            for (let i = 1; i <= 43; i++) {
+                members.push({
+                    id: i,
+                    image: `images/avatar-${i}.jpg`,
+                    name: `Thành viên ${i}`,
+                    message: ''
+                });
+            }
+            renderUploadGrid(members);
+        });
+
+    function renderUploadGrid(members) {
+        const grid = document.getElementById('uploadGrid');
+
+        members.forEach(member => {
+            const card = document.createElement('div');
+            card.className = 'upload-card';
+
+            card.innerHTML = `
+                <div class="member-name">${member.name}</div>
+                <img src="${member.image}" alt="${member.name}" class="current-image"
+                    onerror="this.src='https://via.placeholder.com/100x100?text=No+Image'">
+                <br>
+                <input type="file" id="file-${member.id}" class="file-input" accept="image/*">
+                <label for="file-${member.id}" class="upload-btn">Chọn Ảnh</label>
+                <div class="status" id="status-${member.id}"></div>
+            `;
+
+            grid.appendChild(card);
+
+            // Add upload handler
+            const fileInput = card.querySelector(`#file-${member.id}`);
+            const status = card.querySelector(`#status-${member.id}`);
+            const currentImage = card.querySelector('.current-image');
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    uploadImage(file, member.id, status, currentImage);
+                }
+            });
+        });
+    }
+
+    function uploadImage(file, memberId, statusElement, imageElement) {
+        if (!file.type.startsWith('image/')) {
+            statusElement.textContent = 'Chỉ chấp nhận file ảnh! và link ảnh phải là https';
+            statusElement.className = 'status error';
+            return;
+        }
+
+        if (file.size > 10 * 1024 * 1024) { // 10mb limit
+            statusElement.textContent = 'File quá lớn! Tối đa 10mb';
+            statusElement.className = 'status error';
+            return;
+        }
+
+        statusElement.textContent = 'Đang upload...';
+        statusElement.className = 'status';
+
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('memberId', memberId);
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imageElement.src = e.target.result;
+            statusElement.textContent = 'Upload thành công!';
+            statusElement.className = 'status success';
+            try {
+                localStorage.setItem(`12A12_avatar_${memberId}`, e.target.result);
+            } catch (err) {
+                console.warn('Có thể lưu ảnh vào localStorage:', err);
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+    </script>
+</body>
+</html>

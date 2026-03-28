@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12A12 | Hành Trình 3 Năm</title>
+    <meta name="description" content="Hành trình 3 năm của lớp 12A12 - ghi lại kỷ niệm, bước ngoặt và những câu chuyện đáng nhớ.">
+    <meta name="keywords" content="12A12, hành trình 3 năm, kỷ yếu, bạn bè, kỷ niệm">
+    <meta property="og:title" content="12A12 | Hành Trình 3 Năm">
+    <meta property="og:description" content="Chia sẻ hành trình 3 năm cùng 12A12 - ghi lại những dấu ấn và kỷ niệm.">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #3498db;
+            --accent: #e74c3c;
+            --bg: #fdfdfd;
+            --text-dark: #2c3e50;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            scroll-behavior: smooth;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a.active,
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        #theme-toggle {
+            background: transparent;
+            border: 1px solid rgba(0,0,0,0.12);
+            border-radius: 999px;
+            width: 40px;
+            height: 40px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: background 0.2s ease, border 0.2s ease;
+        }
+
+        #theme-toggle:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 120px auto 80px;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+        }
+
+        .journey-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .journey-form input,
+        .journey-form textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+        }
+
+        .journey-form button {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s ease;
+        }
+
+        .journey-form button:hover {
+            background: #2a80c7;
+        }
+
+        .msg-card {
+            background: #e8f6ff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid #3498db;
+            text-align: left;
+            position: relative;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .msg-card h4 { color: #2c3e50; margin-bottom: 5px; }
+        .msg-card p { color: #7f8c8d; font-style: italic; }
+        .msg-card small { display: block; margin-top: 10px; color: #bdc3c7; font-size: 0.8rem; }
+
+        .msg-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .msg-delete {
+            background: transparent;
+            border: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: #c0392b;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .msg-delete:hover {
+            background: rgba(192, 57, 43, 0.15);
+        }
+
+        .journey-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 960px) {
+            .journey-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .journey-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .section-subtitle {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .year-card {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 24px;
+            align-items: center;
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .year-card.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 24px rgba(52, 152, 219, 0.5), 0 15px 30px rgba(0,0,0,0.08);
+            background: rgba(240, 248, 255, 1);
+        }
+
+        .year-card:nth-child(odd) {
+            background: rgba(240, 248, 255, 0.9);
+        }
+
+        .timeline-img {
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .timeline-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .timeline-content h3 {
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .timeline-content p {
+            line-height: 1.6;
+            color: #4a4a4a;
+        }
+
+        .teacher {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 16px;
+            background: rgba(52, 152, 219, 0.08);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .teacher:hover {
+            background: rgba(52, 152, 219, 0.15);
+            transform: translateX(4px);
+        }
+
+        .teacher.active {
+            border-color: var(--primary);
+            background: rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 12px rgba(52, 152, 219, 0.4);
+        }
+
+        @media (max-width: 900px) {
+            .year-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .teacher-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+        }
+
+        .teacher-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-upload-overlay {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.6);
+            font-size: 1.2rem;
+            z-index: 20;
+        }
+
+        .image-upload-input {
+            display: none;
+        }
+
+        body.edit-mode .image-upload-overlay {
+            display: grid;
+        }
+
+        .teacher-info h4 {
+            margin: 0 0 6px;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        .teacher-info p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #5a5a5a;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 900px) {
+            .year-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body.dark {
+            --bg: #1a1a2e;
+            --text-dark: #f5f6fa;
+            --primary: #ff6b6b;
+            --accent: #4ecdc4;
+            background-color: var(--bg);
+            color: var(--text-dark);
+        }
+
+        body.dark header {
+            background: rgba(20, 20, 40, 0.85);
+        }
+
+        body.dark .journey-form {
+            background: rgba(255,255,255,0.06);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+
+        body.dark input,
+        body.dark textarea {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.12);
+            color: #eee;
+        }
+
+        body.dark .journey-form button {
+            background: var(--primary);
+        }
+
+        body.dark .journey-form button:hover {
+            background: #e86c6c;
+        }
+
+        @media (max-width: 768px) {
+            .section-title { font-size: 2.4rem; }
+            .journey-form { padding: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a class="logo" href="index.html">12A12</a>
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a role="menuitem" href="index.html">Trang Chủ</a></li>
+                <li role="none"><a role="menuitem" href="index.html#members">Thành Viên</a></li>
+                <li role="none"><a role="menuitem" href="journey.html" class="active">Hành Trình 3 Năm</a></li>
+                <li role="none"><a role="menuitem" href="guestbook.html">Lưu Bút</a></li>
+            </ul>
+            <button id="edit-toggle" type="button" aria-label="Bật chế độ chỉnh sửa">✏️</button>
+            <button id="theme-toggle" type="button" aria-label="Chuyển sang chế độ tối">🌙</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2 class="section-title" data-aos="fade-up">Hành Trình 3 Năm của 12A12</h2>
+
+        <div class="journey-grid" data-aos="fade-up">
+            <div class="journey-column journey-teachers">
+                <h3 class="section-subtitle">Giáo viên đồng hành</h3>
+
+                <div class="teacher" data-year="2023" data-aos="fade-up">
+                    <div class="teacher-img">
+                        <img id="journey-teacher-2023" src="images/teacher-2023.jpg" alt="Giáo viên năm 2023" loading="lazy"
+                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
+                        <label class="image-upload-overlay" for="journey-upload-teacher-2023" title="Thay ảnh giáo viên 2023">📷</label>
+                        <input type="file" id="journey-upload-teacher-2023" class="image-upload-input" accept="image/*" />
+                    </div>
+                    <div class="teacher-info">
+                        <h4>Giáo viên 2023</h4>
+                        <p>Thầy/Cô đã đồng hành cùng chúng ta từ những ngày đầu tiên, tạo nền tảng cho một hành trình đáng nhớ.</p>
+                    </div>
+                </div>
+
+                <div class="teacher" data-year="2024" data-aos="fade-up" data-aos-delay="100">
+                    <div class="teacher-img">
+                        <img id="journey-teacher-2024" src="images/teacher-2024.jpg" alt="Giáo viên năm 2024" loading="lazy"
+                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
+                        <label class="image-upload-overlay" for="journey-upload-teacher-2024" title="Thay ảnh giáo viên 2024">📷</label>
+                        <input type="file" id="journey-upload-teacher-2024" class="image-upload-input" accept="image/*" />
+                    </div>
+                    <div class="teacher-info">
+                        <h4>Giáo viên 2024</h4>
+                        <p>Thầy/Cô luôn ở bên, hỗ trợ và động viên mỗi khi chúng ta chuẩn bị bước vào kỳ thi quan trọng.</p>
+                    </div>
+                </div>
+
+                <div class="teacher" data-year="2025" data-aos="fade-up" data-aos-delay="200">
+                    <div class="teacher-img">
+                        <img id="journey-teacher-2025" src="images/teacher-2023.jpg" alt="Giáo viên năm 2025" loading="lazy"
+                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
+                        <label class="image-upload-overlay" for="journey-upload-teacher-2025" title="Thay ảnh giáo viên 2025">📷</label>
+                        <input type="file" id="journey-upload-teacher-2025" class="image-upload-input" accept="image/*" />
+                    </div>
+                    <div class="teacher-info">
+                        <h4>Giáo viên 2025</h4>
+                        <p>Những lời dặn dò cuối năm và nụ cười của thầy/cô sẽ mãi là ký ức khó phai.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="journey-column journey-years">
+                <h3 class="section-subtitle">Hành trình 3 năm</h3>
+
+                <div class="year-card" data-year="2023" data-aos="fade-up">
+                    <div class="timeline-img">
+                        <img id="journey-img-2023" src="images/teacher-2023.jpg" alt="Năm 2023 - Mới làm quen" loading="lazy"
+                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
+                        <label class="image-upload-overlay" for="journey-upload-2023" title="Thay ảnh năm 2023">📷</label>
+                        <input type="file" id="journey-upload-2023" class="image-upload-input" accept="image/*" />
+                    </div>
+                    <div class="timeline-content">
+                        <h3>2023 – Lần đầu gặp gỡ</h3>
+                        <p>Đây là năm chúng ta mới làm quen, bước vào những ngày đầu tiên của hành trình chung.</p>
+                    </div>
+                </div>
+
+                <div class="year-card" data-year="2024" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-img">
+                        <img id="journey-img-2024" src="images/teacher-2024.jpg" alt="Năm 2024 - Đã là bạn bè" loading="lazy"
+                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
+                        <label class="image-upload-overlay" for="journey-upload-2024" title="Thay ảnh năm 2024">📷</label>
+                        <input type="file" id="journey-upload-2024" class="image-upload-input" accept="image/*" />
+                    </div>
+                    <div class="timeline-content">
+                        <h3>2024 – Đã là những người bạn</h3>
+                        <p>Khi cùng nhau vượt qua thử thách, niềm vui và nỗi nhớ, chúng ta gắn kết hơn từng ngày.</p>
+                    </div>
+                </div>
+
+                <div class="year-card" data-year="2025" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-img">
+                        <img id="journey-img-2025" src="images/2025.jpg" alt="Năm 2025 - Thân như không thể xa nhau" loading="lazy"
+                            onerror="this.onerror=null; this.src='https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png';">
+                        <label class="image-upload-overlay" for="journey-upload-2025" title="Thay ảnh năm 2025">📷</label>
+                        <input type="file" id="journey-upload-2025" class="image-upload-input" accept="image/*" />
+                    </div>
+                    <div class="timeline-content">
+                        <h3>2025 – Thân như không thể xa nhau</h3>
+                        <p>Một năm đầy kỷ niệm, nơi tình bạn trở nên sâu sắc và chúng ta luôn ở bên nhau.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; text-align: center; opacity: 0.7; font-size: 0.95rem;">
+            <p>Quay lại <a href="index.html">Trang Chủ</a> hoặc xem <a href="guestbook.html">Lưu Bút</a>.</p>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+async function name(params) {}
+        (function () {
+        const themeToggle = document.getElementById('theme-toggle');
+        const editToggle = document.getElementById('edit-toggle');
+
+        function isEditMode() {
+            return localStorage.getItem('12A12_edit_mode') === '1';
+        }
+
+        function setEditMode(enabled) {
+            document.body.classList.toggle('edit-mode', enabled);
+            if (editToggle) {
+                editToggle.innerText = enabled ? '🔒 Đóng chỉnh sửa' : '✏️ Chỉnh sửa';
+                editToggle.setAttribute('aria-label', enabled ? 'Tắt chế độ chỉnh sửa' : 'Bật chế độ chỉnh sửa');
+            }
+            if (!enabled) {
+                // optionally close any open dialogs
+            }
+            localStorage.setItem('12A12_edit_mode', enabled ? '1' : '0');
+        }
+
+        function promptEditMode() {
+            const password = prompt('Nhập mật khẩu để bật chế độ chỉnh sửa:');
+            if (password === null) return;
+            const isValid = password === '123456';
+            if (isValid) {
+                setEditMode(true);
+                alert('Chế độ chỉnh sửa đã bật. Bạn có thể thay ảnh ở từng phần.');
+            } else {
+                alert('Mật khẩu không đúng.');
+            }
+        }
+
+        const journeyImageConfig = [
+            { imgId: 'journey-img-2023', uploadId: 'journey-upload-2023', storageKey: '12A12_journey_2023' },
+            { imgId: 'journey-img-2024', uploadId: 'journey-upload-2024', storageKey: '12A12_journey_2024' },
+            { imgId: 'journey-img-2025', uploadId: 'journey-upload-2025', storageKey: '12A12_journey_2025' },
+            { imgId: 'journey-teacher-2023', uploadId: 'journey-upload-teacher-2023', storageKey: '12A12_journey_teacher_2023' },
+            { imgId: 'journey-teacher-2024', uploadId: 'journey-upload-teacher-2024', storageKey: '12A12_journey_teacher_2024' },
+            { imgId: 'journey-teacher-2025', uploadId: 'journey-upload-teacher-2025', storageKey: '12A12_journey_teacher_2025' },
+        ];
+
+        function getStoredImage(key) {
+            try {
+                return localStorage.getItem(key);
+            } catch {
+                return null;
+            }
+        }
+
+        function setStoredImage(key, dataUrl) {
+            try {
+                if (dataUrl) localStorage.setItem(key, dataUrl);
+                else localStorage.removeItem(key);
+            } catch {
+                // ignore storage errors
+            }
+        }
+
+        function applyStoredJourneyImages() {
+            journeyImageConfig.forEach(({ imgId, storageKey }) => {
+                const el = document.getElementById(imgId);
+                if (!el) return;
+                const stored = getStoredImage(storageKey);
+                if (stored) {
+                    el.src = stored;
+                }
+            });
+        }
+
+        function initJourneyImageUpload() {
+            journeyImageConfig.forEach(({ imgId, uploadId, storageKey }) => {
+                const input = document.getElementById(uploadId);
+                const img = document.getElementById(imgId);
+                if (!input || !img) return;
+
+                input.addEventListener('change', (event) => {
+                    if (!isEditMode()) return;
+                    const file = event.target.files[0];
+                    if (!file || !file.type.startsWith('image/')) return;
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const dataUrl = e.target.result;
+                        img.src = dataUrl;
+                        setStoredImage(storageKey, dataUrl);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+        }
+
+        function setTheme(mode) {
+            document.body.classList.toggle('dark', mode === 'dark');
+            localStorage.setItem('12A12_theme', mode);
+            if (themeToggle) {
+                themeToggle.innerText = mode === 'dark' ? '☀️' : '🌙';
+                themeToggle.setAttribute('aria-label', mode === 'dark' ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối');
+            }
+        }
+
+        function initTheme() {
+            const saved = localStorage.getItem('12A12_theme');
+            if (saved === 'dark' || saved === 'light') {
+                setTheme(saved);
+                return;
+            }
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            setTheme(prefersDark ? 'dark' : 'light');
+        }
+
+        function handleThemeToggle() {
+            const isDark = document.body.classList.contains('dark');
+            setTheme(isDark ? 'light' : 'dark');
+        }
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', handleThemeToggle);
+        }
+
+        if (editToggle) {
+            editToggle.addEventListener('click', () => {
+                if (isEditMode()) {
+                    setEditMode(false);
+                } else {
+                    promptEditMode();
+                }
+            });
+        }
+
+        function initTeacherYearLinks() {
+            const teachers = document.querySelectorAll('.teacher[data-year]');
+            const yearCards = document.querySelectorAll('.year-card[data-year]');
+
+            // Remove active states initially
+            function clearActive() {
+                teachers.forEach(t => t.classList.remove('active'));
+                yearCards.forEach(y => y.classList.remove('active'));
+            }
+
+            // Handle teacher click
+            teachers.forEach(teacher => {
+                teacher.addEventListener('click', () => {
+                    const year = teacher.getAttribute('data-year');
+                    clearActive();
+                    
+                    // Add active class
+                    teacher.classList.add('active');
+                    const targetCard = document.querySelector(`.year-card[data-year="${year}"]`);
+                    if (targetCard) {
+                        targetCard.classList.add('active');
+                        // Smooth scroll to the year card
+                        targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                });
+            });
+
+            // Handle year card click to highlight corresponding teacher
+            yearCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const year = card.getAttribute('data-year');
+                    clearActive();
+                    
+                    // Add active class
+                    card.classList.add('active');
+                    const targetTeacher = document.querySelector(`.teacher[data-year="${year}"]`);
+                    if (targetTeacher) {
+                        targetTeacher.classList.add('active');
+                        // Smooth scroll to the teacher
+                        targetTeacher.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                });
+            });
+        }
+
+        initTheme();
+        setEditMode(isEditMode());
+        applyStoredJourneyImages();
+        initJourneyImageUpload();
+        initTeacherYearLinks();
+        AOS.init({ duration: 1000, once: true });
+    })();
+    </script>
+</body>
+</html>

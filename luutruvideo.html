@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12A12 | KHO LƯU TRỮ KỈ NIỆM</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    </head>
+<body>
+    <style>
+        /* Màu mặc định (Light Mode) */
+:root {
+    --primary: #3498db;
+    --bg-color: #fdfdfd;
+    --text-color: #2c3e50;
+    --card-bg: #ffffff;
+    --header-bg: rgba(255, 255, 255, 0.95);
+}
+
+/* Màu khi bật Chế độ tối (Dark Mode) */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --text-color: #f1f1f1;
+    --card-bg: #2d2d2d;
+    --header-bg: rgba(26, 26, 26, 0.95);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+}
+
+/* Áp dụng biến màu cho các thành phần khác */
+header { background: var(--header-bg); }
+.gallery-item { background: var(--card-bg); }
+.nav-links a { color: var(--text-color); }
+        /* --- CSS GIAO DIỆN (Lấy tông màu từ index.html) --- */
+        :root {
+            --primary: #3498db; /* Xanh dương - 12A12 */
+            --bg-light: #fdfdfd;
+            --text-dark: #2c3e50;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            padding-top: 90px; /* Tránh bị Header che */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Header & Navigation (Giữ nguyên từ index.html) --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%; top: 0; z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem; font-weight: 700; color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links { display: flex; gap: 24px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+        /* --- TIÊU ĐỀ TRANG --- */
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        /* --- CẤU TRÚC LƯỚI ẢNH (GALLERY GRID) --- */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding-bottom: 80px;
+        }
+
+        /* Thẻ chứa ảnh */
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.2);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1); /* Hiệu ứng zoom nhẹ */
+        }
+
+        /* Hiển thị tiêu đề ảnh khi rê chuột */
+        .img-overlay {
+            position: absolute;
+            bottom: -100%; /* Mặc định ẩn xuống dưới */
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(52, 152, 219, 0.9), transparent);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            transition: bottom 0.5s ease-out;
+            border-radius: 15px;
+        }
+
+        .gallery-item:hover .img-overlay {
+            bottom: 0;
+        }
+
+        .img-overlay p {
+            font-size: 1rem;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-title { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Ẩn menu trên điện thoại */
+        }
+    </style>
+    <header>
+        <nav>
+            <a class="logo" href="index.html">12A12</a>
+            <ul class="nav-links">
+    <li><a href="index.html">Trang Chủ</a></li>
+    <li><a href="index.html#members">Thành Viên</a></li>
+    <li><a href="gallery.html">Kho Ảnh</a></li>
+    <li><a href="luutruvideo.hatml" class="active" >video</a></li>
+    <li><a href="guestbook.html">Lưu Bút</a></li>
+</ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="gallery-header">
+            <h1 class="section-title">Video Lưu Lại Những Tiếng </h1>
+            <p class="section-subtitle">Gửi thời thanh xuân rực rỡ...</p>
+        </div>
+        
+    </div class="video-class">
+        
+
+        <div class="photo-gallery">
+            
+            <div class="gallery-item" style="animation-delay: 0.1s;">
+                <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Ảnh 1" class="gallery-img">
+                <div class="img-overlay">
+                    <p>Những ngày còn bên nhau</p>
+                </div>
+            </div>
+
+            <div class="gallery-item" style="animation-delay: 0.2s;">
+                <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Ảnh 2" class="gallery-img">
+                <div class="img-overlay">
+                    <p>Những tiếng cười đùa  - Những bất ngờ</p>
+                </div>
+            </div>
+
+            <div class="gallery-item" style="animation-delay: 0.3s;">
+                <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Ảnh 3" class="gallery-img">
+                <div class="img-overlay">
+                    <p>vide - 3</p>
+                </div>
+            </div>
+
+            <div class="gallery-item" style="animation-delay: 0.4s;">
+                <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Ảnh 4" class="gallery-img">
+                <div class="img-overlay">
+                    <p>video - 4</p>
+                </div>
+            </div>
+
+            </div>
+    </main>
+
+    <footer>
+        <p>Tập thể Lớp 12A12 | Niên khóa 2023 - 2026</p>
+    </footer>
+
+</body>
+</html>

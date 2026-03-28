@@ -1803,22 +1803,23 @@ document.addEventListener("click", () => {
 </script>
 <script>
 </script>
+
 <script>
-const menuBtn = document.getElementById("menu-toggle");
-const navLinks = document.querySelector(".nav-links");
+document.addEventListener("DOMContentLoaded", () => {
+    const menuBtn = document.getElementById("menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
 
-menuBtn.onclick = () => {const music = document.getElementById("bg-music");
+    if (!menuBtn || !navLinks) return;
 
-};
-const btn = document.getElementById("music-btn");
-// tự đóng menu khi click link
-document.querySelectorAll(".nav-links a").forEach(link => {
-    link.onclick = () => {
-        navLinks.classList.remove("show");
+    menuBtn.onclick = () => {
+        navLinks.classList.toggle("show");
     };
+
+    document.querySelectorAll(".nav-links a").forEach(link => {
+        link.onclick = () => navLinks.classList.remove("show");
+    });
 });
 </script>
-
 </body>
 </html>
 

@@ -1794,7 +1794,7 @@ document.addEventListener("click", () => {
 <script>
 
 
-btn.onclick = () => {
+btn.onclick = () => {    navLinks.classList.toggle("show");
     if (music.paused) {
         music.play();
         btn.innerHTML = "🔊";
@@ -1809,7 +1809,7 @@ const menuBtn = document.getElementById("menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 
 menuBtn.onclick = () => {
-    navLinks.classList.toggle("show");
+
 };
 const btn = document.getElementById("music-btn");
 // tự đóng menu khi click link

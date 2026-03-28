@@ -1782,14 +1782,27 @@ body.dark .nav-links {
 
 <script>
 const music = document.getElementById("bg-music");
+const btn = document.getElementById("music-btn");
 
+
+btn.onclick = () => {
+    if (music.paused) {
+        music.play();
+        btn.innerHTML = "🔊";
+    } else {
+        music.pause();
+        btn.innerHTML = "🔇";
+    }
+};
 // Khi user click bất kỳ đâu → bật tiếng
 document.addEventListener("click", () => {
     music.muted = false;
     music.play();
 }, { once: true });
+<button id="music-btn">🎵</button>
 </script>
-
+<script>
+</script>
 <script>
 const menuBtn = document.getElementById("menu-toggle");
 const navLinks = document.querySelector(".nav-links");

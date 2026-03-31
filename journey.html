@@ -15,16 +15,16 @@
             body {
     overflow-x: hidden;
 }
-        .nav-links {
-    position: fixed;
-    top: 70px;
-    right: 0;
-    width: 220px;
-    height: 100vh;
-    background: white;
-    flex-direction: column;
-    transform: translateX(100%);
-    transition: 0.3s;
+        @media (min-width: 769px) {
+    .nav-links {
+        position: static;
+        transform: none;
+        height: auto;
+        width: auto;
+        background: none;
+        flex-direction: row;
+        display: flex;
+    }
 }
 
 .nav-links.show {
@@ -505,27 +505,21 @@ body.dark .nav-links {
 <body>
 <header>
     <nav>
-        <a class="logo" href="#home">12A12</a>
+        <a class="logo" href="index.html">12A12</a>
 
-        <!-- MENU -->
         <ul class="nav-links">
-            <li><a href="#home">Trang Chủ</a></li>
-            <li><a href="#members">Thành Viên</a></li>
+            <li><a href="index.html#home">Trang Chủ</a></li>
+            <li><a href="index.html#members">Thành Viên</a></li>
             <li><a href="gallery.html">Kho Ảnh</a></li>
+            <li><a href="upload.html">Đăng Ảnh</a></li>
             <li><a href="luutruvideo.html">Video</a></li>
             <li><a href="journey.html">Hành Trình</a></li>
             <li><a href="guestbook.html">Lưu Bút</a></li>
         </ul>
 
-        <!-- NÚT MENU MOBILE -->
-        <button id="menu-toggle">☰</button>
-
-        <!-- NÚT KHÁC -->
-        <button id="edit-toggle">✏️</button>
-        <button id="bg-toggle">🖼️</button>
         <button id="theme-toggle">🌙</button>
     </nav>
-</header> 
+</header>
 <main class="container"> 
     <h2 class="section-title" data-aos="fade-up">Hành Trình 3 Năm của 12A12</h2> 
     <div class="journey-grid" data-aos="fade-up"> 

@@ -9,96 +9,262 @@
     </head>
 <body>
     <style>
-            body {
-    overflow-x: hidden;
-}
-        .nav-links {
-    position: fixed;
-    top: 70px;
-    right: 0;
-    width: 220px;
-    height: 100vh;
-    background: white;
-    flex-direction: column;
-    transform: translateX(100%);
-    transition: 0.3s;
-}
 
-.nav-links.show {
-    transform: translateX(0);
-}
-        @media (max-width: 768px) {
-    .section-title {
-        font-size: 2rem;
-    }
-
-    .teacher {
-        flex-direction: row;
-        gap: 10px;
-    }
-
-    .teacher-img {
-        width: 60px;
-        height: 60px;
-    }
-}
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-        @media (max-width: 768px) {
-    .journey-grid {
-        grid-template-columns: 1fr;
-    }
-}
-        .container {
+        .gallery-img {
     width: 100%;
-    max-width: 900px;
-    margin: 100px auto 60px;
-    padding: 0 15px;
-}
-/* ===== MENU MOBILE ===== */
-
-#menu-toggle {
-    display: none;
-    font-size: 1.6rem;
-    background: none;
-    border: none;
-    cursor: pointer;
+    height: 250px;
+    object-fit: cover;
 }
 
-/* MOBILE */
-@media (max-width: 768px) {
+/* DARK MODE SUPPORT */
+body.dark .nav-links {
+    background: #1a1a2e;
+}
 
-    #menu-toggle {
+        :root {
+            --primary: #3498db;
+            --accent: #e74c3c;
+            --bg: #fdfdfd;
+            --text-dark: #2c3e50;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            scroll-behavior: smooth;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a.active,
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        #theme-toggle {
+            background: transparent;
+            border: 1px solid rgba(0,0,0,0.12);
+            border-radius: 999px;
+            width: 40px;
+            height: 40px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: background 0.2s ease, border 0.2s ease;
+        }
+
+        #theme-toggle:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 120px auto 80px;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+        }
+
+        .guestbook-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .guestbook-form input,
+        .guestbook-form textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+        }
+
+        .guestbook-form button {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s ease;
+        }
+
+        .guestbook-form button:hover {
+            background: #2a80c7;
+        }
+
+        .msg-card {
+            background: #fff9c4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid #f1c40f;
+            text-align: left;
+            position: relative;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .msg-card h4 { color: #2c3e50; margin-bottom: 5px; }
+        .msg-card p { color: #7f8c8d; font-style: italic; }
+        .msg-card small { display: block; margin-top: 10px; color: #bdc3c7; font-size: 0.8rem; }
+
+        .msg-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .msg-delete {
+            background: transparent;
+            border: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: #c0392b;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .msg-delete:hover {
+            background: rgba(192, 57, 43, 0.15);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body.dark {
+            --bg: #1a1a2e;
+            --text-dark: #f5f6fa;
+            --primary: #ff6b6b;
+            --accent: #4ecdc4;
+            background-color: var(--bg);
+            color: var(--text-dark);
+        }
+
+        body.dark header {
+            background: rgba(20, 20, 40, 0.85);
+        }
+
+        body.dark .guestbook-form {
+            background: rgba(255,255,255,0.06);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+
+        body.dark input,
+        body.dark textarea {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.12);
+            color: #eee;
+        }
+
+        body.dark .guestbook-form button {
+            background: var(--primary);
+        }
+
+        body.dark .guestbook-form button:hover {
+            background: #e86c6c;
+        }
+
+
+    /* Tối ưu Header cho cả 2 thiết bị */
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Menu Mobile tinh chỉnh */
+    @media (max-width: 768px) {
+        .nav-links {
+            background: var(--bg); /* Đồng bộ màu nền với theme */
+            border-left: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        #home h1 {
+            font-size: 2.5rem; /* Tránh tràn chữ trên điện thoại */
+        }
+
+        /* Nút chức năng nhỏ hơn trên mobile để không chiếm chỗ */
+        #theme-toggle, #bg-toggle, #edit-toggle, #menu-toggle {
+            width: 35px;
+            height: 35px;
+            font-size: 1rem;
+        }
+    }
+
+    /* Đảm bảo ảnh card không bị méo */
+    .card img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
         display: block;
     }
-
-    .nav-links {
-        position: fixed;
-        top: 70px;
-        right: 0;
-        width: 220px;
-        height: calc(100vh - 70px);
-        background: white;
-        flex-direction: column;
-        padding: 20px;
-        gap: 20px;
-        transform: translateX(100%);
-        transition: 0.3s ease;
-        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-        z-index: 999;
-    }
-
-    .nav-links.show {
-        transform: translateX(0);
-    }
-
-    .nav-links a {
-        font-size: 1.1rem;
-    }
-}
 
 /* DARK MODE SUPPORT */
 body.dark .nav-links {
@@ -288,24 +454,17 @@ header { background: var(--header-bg); }
     </style>
 <header>
     <nav>
-        <a class="logo" href="#home">12A12</a>
-
-        <!-- MENU -->
+        <a class="logo" href="index.html#home">12A12</a>
         <ul class="nav-links">
-            <li><a href="#home">Trang Chủ</a></li>
-            <li><a href="#members">Thành Viên</a></li>
+            <li><a href="index.html#home">Trang Chủ</a></li>
+            <li><a href="index.html#members">Thành Viên</a></li>
             <li><a href="gallery.html">Kho Ảnh</a></li>
+            <li><a href="upload.html">Đăng Ảnh</a></li> 
             <li><a href="luutruvideo.html">Video</a></li>
             <li><a href="journey.html">Hành Trình</a></li>
             <li><a href="guestbook.html">Lưu Bút</a></li>
         </ul>
 
-        <!-- NÚT MENU MOBILE -->
-        <button id="menu-toggle">☰</button>
-
-        <!-- NÚT KHÁC -->
-        <button id="edit-toggle">✏️</button>
-        <button id="bg-toggle">🖼️</button>
         <button id="theme-toggle">🌙</button>
     </nav>
 </header>
@@ -316,38 +475,118 @@ header { background: var(--header-bg); }
             <p class="section-subtitle">Gửi thời thanh xuân rực rỡ...</p>
         </div>
         
-    </div class="video-class">
-        
+    <div class="photo-gallery">
 
-        <div class="photo-gallery">
-            
-            <div class="gallery-item" style="animation-delay: 0.1s;">
-                <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Ảnh 1" class="gallery-img">
-                <div class="img-overlay">
-                    <p>Những ngày còn bên nhau</p>
-                </div>
-            </div>
+    <!-- VIDEO 1 -->
+    <div class="gallery-item" style="animation-delay: 0.1s;">
+            <video class="gallery-img" autoplay muted loop playsinline>
+            <source src="c:\Users\Admin\Downloads\7678320946604.mp4" type="video/mp4">
+        </video>
+        <div class="img-overlay">
+            <p>Video 1</p>
+        </div>
+    </div>
 
-            <div class="gallery-item" style="animation-delay: 0.2s;">
-                <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Ảnh 2" class="gallery-img">
-                <div class="img-overlay">
-                    <p>Những tiếng cười đùa  - Những bất ngờ</p>
-                </div>
-            </div>
+    <!-- VIDEO 2 -->
+    <div class="gallery-item" style="animation-delay: 0.2s;">
+        <video class="gallery-img" autoplay muted loop playsinline>
+            <source src="c:\Users\Admin\Downloads\7665105438469 (1).mp4" type="video/mp4">
+        </video>
+        <div class="img-overlay">
+            <p>Video 2</p>
+        </div>
+    </div>
 
-            <div class="gallery-item" style="animation-delay: 0.3s;">
-                <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Ảnh 3" class="gallery-img">
-                <div class="img-overlay">
-                    <p>vide - 3</p>
-                </div>
-            </div>
+    <!-- VIDEO 3 -->
+    <div class="gallery-item" style="animation-delay: 0.3s;">
+        <video class="gallery-img" autoplay muted loop playsinline>
+            <source src="c:\Users\Admin\Downloads\7678320951932.mp4" type="video/mp4">
+        </video>
+        <div class="img-overlay">
+            <p>Video 3</p>
+        </div>
+    </div>
 
-            <div class="gallery-item" style="animation-delay: 0.4s;">
-                <img src="https://i.ibb.co/6RQF5tXz/Red-Minimalist-Brunch-Club-Logo-1.png" alt="Ảnh 4" class="gallery-img">
-                <div class="img-overlay">
-                    <p>video - 4</p>
-                </div>
-            </div>
+    <!-- VIDEO 4 -->
+    <div class="gallery-item" style="animation-delay: 0.4s;">
+        <video class="gallery-img" autoplay muted loop playsinline>
+            <source src="c:\Users\Admin\Downloads\7665105255768 (1).mp4" type="video/mp4">
+        </video>
+        <div class="img-overlay">
+            <p>Video 4</p>
+        </div>
+    </div>
+
+    <!-- VIDEO 5 -->
+        <div class="gallery-item" style="animation-delay: 0.4s;">
+        <video class="gallery-img" autoplay muted loop playsinline>
+            <source src="c:\Users\Admin\Downloads\7678339036725.mp4" type="video/mp4">
+        </video>
+        <div class="img-overlay">
+            <p>Video 5</p>
+        </div>
+    </div>
+
+    <!-- VIDEO 6 -->
+        <div class="gallery-item" style="animation-delay: 0.4s;">
+        <video class="gallery-img" autoplay muted loop playsinline>
+            <source src="c:\Users\Admin\Downloads\7489186512184.mp4" type="video/mp4">
+        </video>
+        <div class="img-overlay">
+            <p>Video 6</p>
+        </div>
+    </div>
+
+    <!-- VIDEO 7 -->
+        <div class="gallery-item" style="animation-delay: 0.4s;">
+        <video class="gallery-img" autoplay muted loop playsinline>
+            <source src="c:\Users\Admin\Downloads\7489206405697.mp4" type="video/mp4">
+        </video>
+        <div class="img-overlay">
+            <p>Video 7</p>
+        </div>
+    </div>
+
+    <!-- VIDEO 8 -->
+        <div class="gallery-item" style="animation-delay: 0.4s;">
+        <video class="gallery-img" autoplay muted loop playsinline>
+            <source src="c:\Users\Admin\Downloads\7678345481625.mp4" type="video/mp4">
+        </video>
+        <div class="img-overlay">
+            <p>Video 8</p>
+        </div>
+    </div>
+
+    <!-- VIDEO 9 -->
+        <div class="gallery-item" style="animation-delay: 0.4s;">
+        <video class="gallery-img" autoplay muted loop playsinline>
+            <source src="c:\Users\Admin\Downloads\7678345484278.mp4" type="video/mp4">
+        </video>
+        <div class="img-overlay">
+            <p>Video 9</p>
+        </div>
+    </div>
+    <!-- VIDEO 10 -->
+        <div class="gallery-item" style="animation-delay: 0.4s;">
+        <video class="gallery-img" autoplay muted loop playsinline>
+            <source src="c:\Users\Admin\Downloads\7678358486512.mp4" type="video/mp4">
+        </video>
+        <div class="img-overlay">
+            <p>Video 10</p>
+        </div>
+    </div>
+
+        <!-- VIDEO 11 -->
+        <div class="gallery-item" style="animation-delay: 0.4s;">
+        <video class="gallery-img" autoplay muted loop playsinline>
+            <source src="c:\Users\Admin\Downloads\7678358489787.mp4" type="video/mp4">
+        </video>
+        <div class="img-overlay">
+            <p>Video 11</p>
+        </div>
+    </div>
+
+</div>
 
             </div>
     </main>
@@ -380,5 +619,159 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 });
 </script>
+
+<script>
+        (function () {
+        const STORAGE_KEY = '12A12_msgs';
+        const themeToggle = document.getElementById('theme-toggle');
+        const guestForm = document.getElementById('guestbook-form');
+        const messageList = document.getElementById('message-list');
+
+        function escapeHTML(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function loadMessages() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            } catch {
+                return [];
+            }
+        }
+
+        function saveMessages(messages) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(0, 100)));
+        }
+
+        function renderMessages() {
+            const messages = loadMessages();
+            if (!messageList) return;
+
+            if (messages.length === 0) {
+                messageList.innerHTML = '<div class="msg-card"><p>Chưa có lời chúc nào. Hãy là người đầu tiên để lại kỷ niệm nhé!</p></div>';
+                return;
+            }
+
+            messageList.innerHTML = messages.map((m, idx) => `
+                <div class="msg-card">
+                    <div class="msg-header">
+                        <h4>${escapeHTML(m.name)}</h4>
+                        <button type="button" class="msg-delete" data-index="${idx}" aria-label="Xóa lời chúc">✕</button>
+                    </div>
+                    <p>"${escapeHTML(m.text)}"</p>
+                    <small>${escapeHTML(m.date)}</small>
+                </div>
+            `).join('');
+        }
+
+        function addMessage(event) {
+            event.preventDefault();
+            if (!guestForm) return;
+
+            const nameInput = document.getElementById('guest-name');
+            const msgInput = document.getElementById('guest-msg');
+            const name = (nameInput?.value || '').trim();
+            const text = (msgInput?.value || '').trim();
+
+            if (!name || !text) {
+                alert('Vui lòng nhập đủ tên và lời chúc nha!');
+                return;
+            }
+
+            const messages = loadMessages();
+            messages.unshift({
+                name,
+                text,
+                date: new Date().toLocaleString('vi-VN')
+            });
+
+            saveMessages(messages);
+            renderMessages();
+
+            if (nameInput) nameInput.value = '';
+            if (msgInput) msgInput.value = '';
+        }
+
+        function deleteMessage(index) {
+            const messages = loadMessages();
+            if (index < 0 || index >= messages.length) return;
+            messages.splice(index, 1);
+            saveMessages(messages);
+            renderMessages();
+        }
+
+        function setTheme(mode) {
+            document.body.classList.toggle('dark', mode === 'dark');
+            localStorage.setItem('12A12_theme', mode);
+            if (themeToggle) {
+                themeToggle.innerText = mode === 'dark' ? '☀️' : '🌙';
+                themeToggle.setAttribute('aria-label', mode === 'dark' ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối');
+            }
+        }
+
+        function initTheme() {
+            const saved = localStorage.getItem('12A12_theme');
+            if (saved === 'dark' || saved === 'light') {
+                setTheme(saved);
+                return;
+            }
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            setTheme(prefersDark ? 'dark' : 'light');
+        }
+
+        function handleThemeToggle() {
+            const isDark = document.body.classList.contains('dark');
+            setTheme(isDark ? 'light' : 'dark');
+        }
+
+        if (guestForm) {
+            guestForm.addEventListener('submit', addMessage);
+        }
+
+        if (messageList) {
+            messageList.addEventListener('click', (event) => {
+                const button = event.target.closest('.msg-delete');
+                if (!button) return;
+                const index = Number(button.dataset.index);
+                if (!Number.isNaN(index)) deleteMessage(index);
+            });
+        }
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', handleThemeToggle);
+        }
+
+        renderMessages();
+        initTheme();
+
+        function createPetals() {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
+            const container = document.getElementById('petals');
+            if (!container) return;
+            const count = 18;
+
+            for (let i = 0; i < count; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.animationDuration = (Math.random() * 4 + 5) + 's';
+                petal.style.animationDelay = (Math.random() * 5) + 's';
+                petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+                container.appendChild(petal);
+            }
+        }
+
+        createPetals();
+        AOS.init({ duration: 1000, once: true });
+    })();
+    </script>
+
 </body>
 </html>

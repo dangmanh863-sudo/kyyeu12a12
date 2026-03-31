@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>12A12 | KỶ YẾU THANH XUÂN</title>
@@ -14,56 +13,7 @@
     <link rel="icon" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
     <style>
-
-/* ===== MENU MOBILE ===== */
-
-#menu-toggle {
-    display: none;
-    font-size: 1.6rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-
-    #menu-toggle {
-        display: block;
-    }
-
-    .nav-links {
-        position: fixed;
-        top: 70px;
-        right: 0;
-        width: 220px;
-        height: calc(100vh - 70px);
-        background: white;
-        flex-direction: column;
-        padding: 20px;
-        gap: 20px;
-        transform: translateX(100%);
-        transition: 0.3s ease;
-        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-        z-index: 999;
-    }
-
-    .nav-links.show {
-        transform: translateX(0);
-    }
-
-    .nav-links a {
-        font-size: 1.1rem;
-    }
-}
-
-/* DARK MODE SUPPORT */
-body.dark .nav-links {
-    background: #1a1a2e;
-}
-
         /* nhạc (Light Mode) */
         #music-btn {
     position: fixed;
@@ -90,7 +40,6 @@ body.dark .nav-links {
             z-index: 10; /* Nằm trên nội dung nhưng dưới menu */
             overflow: hidden;
         }
-
         .hat {
             position: absolute;
             top: -60px;
@@ -107,13 +56,11 @@ body.dark .nav-links {
             will-change: transform, opacity;
             animation: hatFall linear infinite;
         }
-
         .hat::before {
             content: "🎓";
             display: block;
             line-height: 1;
         }
-
         @keyframes hatFall {
             0% {
                 transform: translate3d(0, 0, 0) rotate(0deg) scale(var(--hat-scale));
@@ -136,7 +83,6 @@ body.dark .nav-links {
                 opacity: 0;
             }
         }
-
         /* --- Reset & Variables --- */
         :root {
             --primary: #3498db;
@@ -152,532 +98,1053 @@ body.dark .nav-links {
             --hero-bg-position: center;
             --hero-bg-repeat: no-repeat;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Quicksand', sans-serif;
+
             background-color: var(--bg);
+
             background-image: var(--bg-image);
+
             background-size: var(--bg-size);
+
             background-position: var(--bg-position);
+
             background-repeat: var(--bg-repeat);
+
             color: var(--text-dark);
+
             scroll-behavior: smooth;
+
             overflow-x: hidden; /* Ngăn thanh cuộn ngang do hiệu ứng rơi */
+
             position: relative; /* Cần thiết cho hiệu ứng rơi */
+
             padding-top: 80px; /* Giữ nội dung không bị che bởi header cố định */
+
             min-height: 100vh;
+
         }
+
+
 
         /* --- Intro Overlay --- */
+
         .intro-overlay {
+
             position: fixed;
+
             inset: 0;
+
             background: rgba(0,0,0,0.85);
+
             display: grid;
+
             place-items: center;
+
             z-index: 2000;
+
             opacity: 1;
+
             transition: opacity 0.4s ease;
+
         }
+
+
 
         .hero-edit-btn {
+
             position: absolute;
+
             top: 18px;
+
             right: 18px;
+
             width: 40px;
+
             height: 40px;
+
             border-radius: 50%;
+
             border: 1px solid rgba(255, 255, 255, 0.65);
+
             background: rgba(0, 0, 0, 0.45);
+
             color: white;
+
             cursor: pointer;
+
             display: none;
+
             align-items: center;
+
             justify-content: center;
+
             font-size: 1.1rem;
+
             z-index: 100;
+
         }
+
+
 
         body.edit-mode .hero-edit-btn {
+
             display: grid;
+
             place-items: center;
+
         }
+
+
 
         .intro-overlay.hidden {
+
             opacity: 0;
+
             pointer-events: none;
+
         }
+
+
 
         .overlay {
+
             position: fixed;
+
             inset: 0;
+
             background: rgba(0, 0, 0, 0.65);
+
             display: grid;
+
             place-items: center;
+
             z-index: 2100;
+
             opacity: 1;
+
             transition: opacity 0.2s ease;
+
         }
+
+
 
         .overlay.hidden {
+
             opacity: 0;
+
             pointer-events: none;
+
         }
+
+
 
         .modal {
+
             background: rgba(255, 255, 255, 0.95);
+
             padding: 22px;
+
             border-radius: 18px;
+
             max-width: 460px;
+
             width: 92%;
+
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+
         }
+
+
 
         body.dark .modal {
+
             background: rgba(20, 20, 40, 0.95);
+
             color: #fff;
+
         }
+
+
 
         .modal h2 {
+
             margin-top: 0;
+
         }
+
+
 
         .modal .field {
+
             margin-bottom: 14px;
+
             display: flex;
+
             flex-direction: column;
+
             gap: 6px;
+
         }
+
+
 
         .modal-actions {
+
             display: flex;
+
             gap: 10px;
+
             justify-content: flex-end;
+
             flex-wrap: wrap;
+
         }
+
+
 
         .modal-actions button {
+
             flex: 1;
+
             min-width: 100px;
+
             padding: 10px 14px;
+
             border-radius: 999px;
+
             border: 1px solid rgba(0, 0, 0, 0.1);
+
             background: rgba(255, 255, 255, 0.9);
+
             cursor: pointer;
+
         }
+
+
 
         body.dark .modal-actions button {
+
             background: rgba(255, 255, 255, 0.08);
+
             border-color: rgba(255, 255, 255, 0.18);
+
             color: #fff;
+
         }
+
+
 
         .intro-content {
+
             text-align: center;
+
             max-width: 520px;
+
             padding: 30px;
+
             border-radius: 24px;
+
             background: rgba(255,255,255,0.12);
+
             box-shadow: 0 20px 70px rgba(0,0,0,0.5);
+
             backdrop-filter: blur(10px);
+
             color: #fff;
+
         }
+
+
 
         .intro-content h1 {
+
             font-size: 3rem;
+
             margin-bottom: 12px;
+
             letter-spacing: 0.05em;
+
         }
+
+
 
         .intro-content p {
+
             margin-bottom: 24px;
+
             font-size: 1.1rem;
+
             line-height: 1.5;
+
             opacity: 0.9;
+
         }
+
+
 
         .intro-content button {
+
             padding: 14px 22px;
+
             border-radius: 999px;
+
             border: 1px solid rgba(255,255,255,0.4);
+
             background: rgba(255,255,255,0.16);
+
             color: white;
+
             font-weight: 700;
+
             cursor: pointer;
+
             transition: background 0.2s ease, transform 0.2s ease;
+
         }
+
+
 
         .intro-content button:hover {
+
             background: rgba(255,255,255,0.26);
+
             transform: translateY(-1px);
+
         }
+
+
 
         /* --- Header & Navigation --- */
+
         header {
+
             background: rgba(255, 255, 255, 0.95);
+
             padding: 15px 0;
+
             position: fixed;
+
             width: 100%;
+
             top: 0;
+
             z-index: 1000;
+
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
         }
+
+
 
         nav {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             max-width: 1200px;
+
             margin: 0 auto;
+
             padding: 0 20px;
+
             gap: 16px;
+
         }
+
+
 
         .logo {
+
             position: relative;
+
             padding-left: 2.6rem;
+
             font-size: 1.8rem;
+
             font-weight: 700;
+
             color: var(--primary);
+
             font-family: 'Quicksand', sans-serif;
+
         }
+
+
 
         .logo::before {
+
             content: "🎓";
+
             position: absolute;
+
             left: 0;
+
             top: 50%;
+
             transform: translateY(-50%);
+
             width: 2rem;
+
             height: 2rem;
+
             display: grid;
+
             place-items: center;
+
             border-radius: 50%;
+
             background: rgba(52, 152, 219, 0.18);
+
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
             font-size: 1.25rem;
+
         }
+
+
 
         .nav-links {
+
             display: flex;
+
             gap: 24px;
+
             list-style: none;
+
         }
+
+
 
         .nav-links a {
+
             text-decoration: none;
+
             color: var(--text-dark);
+
             font-weight: 600;
+
             transition: color 0.2s ease;
+
         }
+
+
 
         .nav-links a:hover,
+
         .nav-links a.active {
+
             color: var(--primary);
+
         }
+
+
 
         #theme-toggle,
+
         #bg-toggle {
+
             background: transparent;
+
             border: 1px solid rgba(0,0,0,0.12);
+
             border-radius: 999px;
+
             width: 40px;
+
             height: 40px;
+
             font-size: 1.1rem;
+
             cursor: pointer;
+
             display: grid;
+
             place-items: center;
+
             transition: background 0.2s ease, border 0.2s ease;
+
         }
+
+
 
         #theme-toggle:hover,
+
         #bg-toggle:hover {
+
             background: rgba(0,0,0,0.05);
+
         }
+
+
 
         /* Hiện nút thay nền chỉ khi ở chế độ chỉnh sửa */
+
         #bg-toggle {
+
             display: none;
+
         }
+
+
 
         body.edit-mode #bg-toggle {
+
             display: grid;
+
         }
+
+
 
         body.dark {
+
             --bg: #1a1a2e;
+
             --text-dark: #f5f6fa;
+
             --primary: #ff6b6b;
+
             --accent: #4ecdc4;
+
             background-color: var(--bg);
+
             color: var(--text-dark);
+
         }
+
+
 
         body.dark header {
+
             background: rgba(20, 20, 40, 0.85);
+
         }
+
+
 
         body.dark .card {
+
             background: rgba(255,255,255,0.06);
+
             border-color: rgba(255,255,255,0.12);
+
         }
+
+
 
         body.dark .card-info h3 {
+
             color: var(--primary);
+
         }
+
+
 
         body.dark .card-info p {
+
             color: rgba(255,255,255,0.8);
+
         }
+
+
 
         body.dark footer {
+
             background: #0f0f1d;
+
         }
+
+
 
         body.dark input,
+
         body.dark textarea {
+
             background: rgba(255,255,255,0.08);
+
             border-color: rgba(255,255,255,0.12);
+
             color: #eee;
+
         }
+
+
 
         /* --- Hero Section --- */
+
         #home {
+
             position: relative;
+
             height: 100vh;
+
             background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), var(--hero-bg-image);
+
             background-size: auto, var(--hero-bg-size);
+
             background-position: center, var(--hero-bg-position);
+
             background-repeat: no-repeat, var(--hero-bg-repeat);
+
             display: flex;
+
             justify-content: center;
+
             align-items: center;
+
             text-align: center;
+
             color: white;
+
             padding: 0 20px;
+
         }
+
+
 
         #home h1 {
+
             font-family: 'Dancing Script', cursive;
+
             font-size: 5rem;
+
             margin-bottom: 15px;
+
             text-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+
         }
+
+
 
         #home p {
+
             font-size: 1.5rem;
+
             opacity: 0.9;
+
             font-weight: 600;
+
         }
+
+
 
         /* --- Members Section --- */
+
         .container {
+
             max-width: 1200px;
+
             margin: 80px auto;
+
             padding: 0 20px;
+
             position: relative; /* Cần thiết cho AOS */
+
         }
+
+
 
         .section-title {
+
             text-align: center;
+
             font-family: 'Dancing Script', cursive;
+
             font-size: 3rem;
+
             color: var(--primary);
+
             margin-bottom: 50px;
+
         }
+
+
 
         .member-grid {
+
             display: grid;
+
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+
             gap: 30px;
+
         }
+
+
 
         .card {
+
             position: relative;
+
             background: white;
+
             border-radius: 20px;
+
             overflow: hidden;
+
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+
             transition: transform 0.4s ease, opacity 0.6s ease;
+
             border: 1px solid #eee;
+
             opacity: 0;
+
             transform: translateY(30px);
+
         }
+
+
 
         .card .avatar-input {
+
             display: none;
+
         }
+
+
 
         .card .upload-overlay {
+
             position: absolute;
+
             top: 12px;
+
             right: 12px;
+
             width: 34px;
+
             height: 34px;
+
             border-radius: 50%;
+
             background: rgba(0,0,0,0.5);
+
             color: #fff;
+
             display: none;
+
             place-items: center;
+
             cursor: pointer;
+
             opacity: 0;
+
             transition: opacity 0.2s ease, transform 0.2s ease;
+
             font-size: 16px;
+
             border: 1px solid rgba(255,255,255,0.55);
+
         }
+
+
 
         body.edit-mode .card .upload-overlay {
+
             display: grid;
+
         }
+
+
 
         body.edit-mode .card:hover .upload-overlay {
+
             opacity: 1;
+
             transform: scale(1.05);
+
         }
+
+
 
         .card.visible {
+
             opacity: 1;
+
             transform: translateY(0);
+
         }
+
+
 
         .card:hover {
+
             transform: translateY(-10px);
+
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+
         }
+
+
 
         .card img {
+
             width: 100%;
+
             height: 350px;
+
             object-fit: cover;
+
         }
+
+
 
         .card-info {
+
             padding: 20px;
+
             text-align: center;
+
         }
+
+
 
         .card-info h3 {
+
             color: var(--primary);
+
             margin-bottom: 8px;
+
             font-size: 1.3rem;
+
         }
+
+
 
         .card-info p {
+
             font-style: italic;
+
             color: #7f8c8d;
+
             font-size: 0.9rem;
+
             line-height: 1.4;
+
         }
+
+
 
         /* --- Footer --- */
+
         footer {
+
             background: #2c3e50;
+
             color: white;
+
             padding: 50px 0;
+
             text-align: center;
+
             position: relative;
+
             z-index: 20; /* Nằm trên hiệu ứng nón */
+
         }
+
+
 
         footer h2 {
+
             font-family: 'Dancing Script', cursive;
+
             font-size: 2.5rem;
+
             margin-bottom: 10px;
+
         }
+
+
 
         footer p {
+
             opacity: 0.7;
+
             font-size: 0.9rem;
+
         }
+
+
 
         /* Responsive */
+
         @media (max-width: 768px) {
+
             #home h1 { font-size: 3rem; }
+
             .section-title { font-size: 2.2rem; }
+
             #music-box { bottom: 10px; left: 10px; transform: scale(0.9); }
+
         }
+
+
 
         /* --- Back to top button --- */
+
         #back-to-top {
+
             position: fixed;
+
             right: 20px;
+
             bottom: 20px;
+
             width: 44px;
+
             height: 44px;
+
             border-radius: 50%;
+
             border: none;
+
             background: rgba(0, 0, 0, 0.65);
+
             color: white;
+
             font-size: 1.25rem;
+
             display: grid;
+
             place-items: center;
+
             cursor: pointer;
+
             box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+
             opacity: 0;
+
             visibility: hidden;
+
             transition: opacity 0.2s ease, visibility 0.2s ease;
+
             z-index: 1200;
+
         }
+
+
 
         #back-to-top.show {
+
             opacity: 1;
+
             visibility: visible;
+
         }
 
+
+
         section {
+
             scroll-margin-top: 110px;
+
         }
+
+
 
     </style>
 
+
+
 </head>
+
 <body>
 
-    <div id="intro-overlay" class="intro-overlay" aria-label="Giới thiệu"> 
+
+
+    <div id="intro-overlay" class="intro-overlay" aria-label="Giới thiệu">
+
         <div class="intro-content">
+
             <h1>12A12 – Kỷ yếu thanh xuân</h1>
+
             <p>Chào mừng bạn đến với trang kỷ yếu. Nhấn "Bắt đầu" để xem kỷ niệm của chúng ta.</p>
+
             <button id="intro-enter" type="button">Bắt đầu</button>
+
         </div>
+
     </div>
 
+
+
     <div id="bg-settings-modal" class="overlay hidden" aria-hidden="true">
+
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="bg-settings-title">
+
             <h2 id="bg-settings-title">Cài đặt nền</h2>
+
             <p>Chọn ảnh nền và điều chỉnh cách hiển thị. Ảnh sẽ được lưu trên trình duyệt của bạn.</p>
 
+
+
             <div class="field">
+
                 <label for="bg-target-select">Áp dụng cho</label>
+
                 <select id="bg-target-select">
+
                     <option value="page">Toàn trang (thành viên)</option>
+
                     <option value="hero">Trang chủ (12A12 - Mãi Là Anh Em)</option>
+
                 </select>
+
             </div>
 
+
+
             <div class="field">
+
                 <label for="bg-image-input">Ảnh nền</label>
+
                 <input type="file" id="bg-image-input" accept="image/*" />
+
             </div>
 
+
+
             <div class="field">
+
                 <label for="bg-size-select">Kích thước</label>
+
                 <select id="bg-size-select">
+
                     <option value="cover">Phủ toàn</option>
+
                     <option value="contain">Gọn</option>
+
                 </select>
+
             </div>
 
+
+
             <div class="field">
+
                 <label for="bg-repeat-select">Lặp lại</label>
+
                 <select id="bg-repeat-select">
+
                     <option value="no-repeat">Không</option>
+
                     <option value="repeat">Lặp</option>
+
                     <option value="repeat-x">Lặp ngang</option>
+
                     <option value="repeat-y">Lặp dọc</option>
+
                 </select>
+
             </div>
+
+
 
             <div class="field">
                 <label for="bg-position-select">Vị trí</label>
@@ -689,7 +1156,6 @@ body.dark .nav-links {
                     <option value="right">Phải</option>
                 </select>
             </div>
-
             <div class="modal-actions">
                 <button id="bg-apply-btn" type="button">Áp dụng</button>
                 <button id="bg-reset-btn" type="button">Đặt lại</button>
@@ -697,29 +1163,19 @@ body.dark .nav-links {
             </div>
         </div>
     </div>
-
     <div id="graduation-hats"></div>
-
 <header>
     <nav>
         <a class="logo" href="#home">12A12</a>
-
-        <!-- MENU -->
         <ul class="nav-links">
             <li><a href="#home">Trang Chủ</a></li>
             <li><a href="#members">Thành Viên</a></li>
             <li><a href="gallery.html">Kho Ảnh</a></li>
+            <li><a href="upload.html">Đăng Ảnh</a></li> 
             <li><a href="luutruvideo.html">Video</a></li>
             <li><a href="journey.html">Hành Trình</a></li>
             <li><a href="guestbook.html">Lưu Bút</a></li>
         </ul>
-
-        <!-- NÚT MENU MOBILE -->
-        <button id="menu-toggle">☰</button>
-
-        <!-- NÚT KHÁC -->
-        <button id="edit-toggle">✏️</button>
-        <button id="bg-toggle">🖼️</button>
         <button id="theme-toggle">🌙</button>
     </nav>
     <iframe src="music.html" style="display:none;"></iframe>
@@ -730,8 +1186,7 @@ body.dark .nav-links {
             <h1>12A12 - Mãi Là Anh Em</h1>
             <p>Niên khóa 2023 - 2026 • Hành trình rực rỡ</p>
         </div>
-    </section>
-
+    </section> 
     <div class="container" id="members">
         <h2 class="section-title" data-aos="fade-up"
         >43 Mảnh Ghép Thanh Xuân</h2>
